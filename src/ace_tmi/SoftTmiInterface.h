@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ACE_SEGMENT_SOFT_TMI_INTERFACE_H
-#define ACE_SEGMENT_SOFT_TMI_INTERFACE_H
+#ifndef ACE_TMI_SOFT_TMI_INTERFACE_H
+#define ACE_TMI_SOFT_TMI_INTERFACE_H
 
 #include <Arduino.h>
 
-namespace ace_segment {
+namespace ace_tmi {
 
 /**
  * Class that knows how to communicate with a TM1637 chip. It uses a 2-wire
@@ -184,6 +184,6 @@ class SoftTmiInterface {
     uint8_t const mDelayMicros;
 };
 
-} // ace_segment
+} // ace_tmi
 
 #endif

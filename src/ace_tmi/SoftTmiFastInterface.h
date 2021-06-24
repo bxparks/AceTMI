@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ACE_SEGMENT_SOFT_TMI_FAST_INTERFACE_H
-#define ACE_SEGMENT_SOFT_TMI_FAST_INTERFACE_H
+#ifndef ACE_TMI_SOFT_TMI_FAST_INTERFACE_H
+#define ACE_TMI_SOFT_TMI_FAST_INTERFACE_H
 
 // This header file requires the digitalWriteFast library on AVR, or the
 // EpoxyMockDigitalWriteFast library on EpoxyDuino.
@@ -32,7 +32,7 @@ SOFTWARE.
 #include <stdint.h>
 #include <Arduino.h> // delayMicroseconds()
 
-namespace ace_segment {
+namespace ace_tmi {
 
 /**
  * Exactly the same as SoftTmiInterface except that this uses the
@@ -178,7 +178,7 @@ class SoftTmiFastInterface {
     void dataLow() const { pinModeFast(T_DIO_PIN, OUTPUT); bitDelay(); }
 };
 
-} // ace_segment
+} // ace_tmi
 
 #endif // defined(ARDUINO_ARCH_AVR)
 
