@@ -25,10 +25,6 @@ SOFTWARE.
 #ifndef ACE_TMI_SOFT_TMI_FAST_INTERFACE_H
 #define ACE_TMI_SOFT_TMI_FAST_INTERFACE_H
 
-// This header file requires the digitalWriteFast library on AVR, or the
-// EpoxyMockDigitalWriteFast library on EpoxyDuino.
-#if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
-
 #include <stdint.h>
 #include <Arduino.h> // delayMicroseconds()
 
@@ -179,7 +175,5 @@ class SoftTmiFastInterface {
 };
 
 } // ace_tmi
-
-#endif // defined(ARDUINO_ARCH_AVR)
 
 #endif
