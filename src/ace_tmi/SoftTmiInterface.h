@@ -69,8 +69,8 @@ class SoftTmiInterface {
      * microseconds. Some microcontrollers may support better accuracy and may
      * work well with values as low as 1 microsecond.
      *
-     * @tparam dioPin pin attached to the data line
-     * @tparam clkPin pin attached to the clock line
+     * @param dioPin pin attached to the data line
+     * @param clkPin pin attached to the clock line
      * @param delayMicros delay after each bit transition of DIO or CLK. Should
      *    be greater or equal to 3 microseconds on AVR processors, but may work
      *    as low as 1 microsecond on other microcontrollers.
