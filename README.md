@@ -2,21 +2,26 @@
 
 Unified interface for selecting different implementations for communicating
 with a TM1637 LED controller chip on Arduino platforms. Uses C++ templates to
-achieve minimal or zero-cost runtime overhead for the abstraction. The code was
-initially part of the [AceSegment](https://github.com/bxparks/AceSegment)
-library, but was extracted into a separate library so that it can be shared with
-other projects. The TM1637 uses a protocol that is electrically very similar to
-I2C.
+achieve minimal or zero-cost runtime overhead for the abstraction.  In more
+technical terms, the library provides compile-time polymorphism instead of
+runtime polymorphism to avoid the overhead of the `virtual` keyword.
+
+The code was initially part of the
+[AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
+into a separate library so that it can be shared with other projects. It
+provides the following implementations:
+
+* `SoftTmiInterface.h`
+    * Implements the TM1637 protocol using `digitalWrite()`.
+* `SoftTmiFastInterface.h`
+    * Implements the TM1637 protocol using `digitalWriteFast()`.
 
 The "TMI" acronym is an invention of this library so that the TM1637 protocol
 can be referenced by a name. It stands for "Titan Micro Interface" (analogous to
-Serial Peripheral Interface) which is named after the compnay Titan Micro
-Electronics which manufactures the TM1637 chip.
-
-This library provides the following C++ class templates:
-
-* `SoftTmiInterface`
-* `SoftTmiFastInterface`
+Serial Peripheral Interface) which is named after the company Titan Micro
+Electronics which manufactures the TM1637 chip. The TM1637 protocol is
+electrically very similar to I2C, but different enough that we cannot use the
+hardware `<Wire.h>` library.
 
 **Version**: 0.1 (2021-06-24)
 
@@ -80,6 +85,9 @@ depend on one of the digitalWriteFast libraries, for example:
 * this `README.md` file.
 * [Doxygen docs](https://bxparks.github.io/AceTMI/html)
     * On Github pages.
+* Examples:
+    * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1637Demo
+    * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1637DualDemo
 
 <a name="Usage"></a>
 ## Usage
