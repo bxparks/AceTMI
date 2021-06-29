@@ -143,6 +143,10 @@ class SoftTmiFastInterface {
       return readAck();
     }
 
+    // Use default copy constructor and assignment operator.
+    SoftTmiFastInterface(const SoftTmiFastInterface&) = default;
+    SoftTmiFastInterface& operator=(const SoftTmiFastInterface&) = default;
+
   private:
     /**
      * Read the ACK/NACK bit from the device upon the falling edge of the 8th
