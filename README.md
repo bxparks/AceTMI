@@ -30,8 +30,6 @@ enough that we cannot use the hardware `<Wire.h>` library.
 * https://github.com/bxparks/AceSPI
 * https://github.com/bxparks/AceWire
 
-**Status**: Works, but needs documentation.
-
 ## Table of Contents
 
 * [Installation](#Installation)
@@ -40,6 +38,7 @@ enough that we cannot use the hardware `<Wire.h>` library.
 * [Documentation](#Documentation)
 * [Usage](#Usage)
     * [Include Header and Namespace](#HeaderAndNamespace)
+    * [Unified Interface](#UnifiedInterface)
     * [SoftTmiInterface](#SoftTmiInterface)
     * [SoftTmiFastInterface](#SoftTmiFastInterface)
 * [System Requirements](#SystemRequirements)
@@ -124,6 +123,26 @@ library. To use the "Fast" versions, use something like the following:'
   #include <ace_tmi/SoftTmiFastInterface.h>
   using ace_tmi::SoftTmiFastInterface;
 #endif
+```
+
+<a name="UnifiedInterface"></a>
+### Unified Interface
+
+The classes in this library provide the following unified interface for handling
+TM1637 communication. Downstream classes can code against this unified interface
+using C++ templates so that different implementations can be selected at
+compile-time.
+
+```C++
+class XxxInterface {
+  public:
+    void begin();
+    void end();
+
+    void startCondition();
+    void stopCondition();
+    uint8_t sendByte(uint8_t data);
+};
 ```
 
 <a name="SoftTmiInterface"></a>
