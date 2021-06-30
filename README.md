@@ -17,15 +17,18 @@ provides the following implementations:
     * Implements the TM1637 protocol using `digitalWriteFast()`.
 
 The "TMI" acronym is an invention of this library so that the TM1637 protocol
-can be referenced by a name. It stands for "Titan Micro Interface" (analogous to
-Serial Peripheral Interface) which is named after the company Titan Micro
-Electronics which manufactures the TM1637 chip. The TM1637 protocol is
-electrically very similar to I2C, but different enough that we cannot use the
-hardware `<Wire.h>` library.
+can be referenced by a name. It stands for "Titan Micro Interface" which is
+named after the company Titan Micro Electronics which manufactures the TM1637
+chip. The TM1637 protocol is electrically very similar to I2C, but different
+enough that we cannot use the hardware `<Wire.h>` library.
 
 **Version**: 0.1 (2021-06-24)
 
 **Changelog**: [CHANGELOG.md](CHANGELOG.md)
+
+**See Also**:
+* https://github.com/bxparks/AceSPI
+* https://github.com/bxparks/AceWire
 
 **Status**: Works, but needs documentation.
 
@@ -37,6 +40,8 @@ hardware `<Wire.h>` library.
 * [Documentation](#Documentation)
 * [Usage](#Usage)
     * [Include Header and Namespace](#HeaderAndNamespace)
+    * [SoftTmiInterface](#SoftTmiInterface)
+    * [SoftTmiFastInterface](#SoftTmiFastInterface)
 * [System Requirements](#SystemRequirements)
     * [Hardware](#Hardware)
     * [Tool Chain](#ToolChain)
@@ -101,6 +106,7 @@ use, all classes are defined in the `ace_tmi` namespace. To use the code without
 prepending the `ace_tmi::` prefix, use the `using` directive:
 
 ```C++
+#include <Arduino.h>
 #include <AceTMI.h>
 using ace_tmi::SoftTmiInterface;
 ```
@@ -110,6 +116,7 @@ work only on AVR processors and they depend on a `<digitalWriteFast.h>`
 library. To use the "Fast" versions, use something like the following:'
 
 ```C++
+#include <Arduino.h>
 #include <AceTMI.h>
 
 #if defined(ARDUINO_ARCH_AVR)
@@ -117,6 +124,86 @@ library. To use the "Fast" versions, use something like the following:'
   #include <ace_tmi/SoftTmiFastInterface.h>
   using ace_tmi::SoftTmiFastInterface;
 #endif
+```
+
+<a name="SoftTmiInterface"></a>
+### SoftTmiInterface
+
+The `SoftTmiInterface` can be used like this to communicate with a TM1637
+controller chip:
+
+```C++
+#include <Arduino.h>
+#include <AceTMI.h>
+using ace_tmi::SoftTmiInterface;
+
+const uint8_t CLK_PIN = 8;
+const uint8_t DIO_PIN = 9;
+const uint8_t DELAY_MICROS = 100;
+
+template <typename T_TMII>
+class MyClass {
+  public:
+    MyClass(T_TMII& tmiInterface)
+        : mTmiInterface(tmiInterface)
+    { ... }
+
+  [...]
+
+  private:
+    T_TMII mTmiInterface; // reference will also work
+};
+
+using TmiInterface = SoftTmiInterface;
+TmiInterface tmiInterface(DIO_PIN, CLK_PIN, DELAY_MICROS);
+MyClass<TmiInterface> myClass(tmiInterface);
+
+void setup() {
+  tmiInterface.begin();
+  ...
+}
+```
+
+<a name="SoftTmiFastInterface"></a>
+### SoftTmiFastInterface
+
+The `SoftTmiFastInterface` is identical to `SoftTmiInterface` except that it
+uses `digitalWriteFast()`:
+
+```C++
+#include <Arduino.h>
+#include <AceTMI.h>
+#if defined(ARDUINO_ARCH_AVR)
+  #include <digitalWriteFast.h>
+  #include <ace_tmi/SoftTmiFastInterface.h>
+  using ace_tmi::SoftTmiInterface;
+#endif
+
+const uint8_t CLK_PIN = 8;
+const uint8_t DIO_PIN = 9;
+const uint8_t DELAY_MICROS = 100;
+
+template <typename T_TMII>
+class MyClass {
+  public:
+    MyClass(T_TMII& tmiInterface)
+        : mTmiInterface(tmiInterface)
+    { ... }
+
+  [...]
+
+  private:
+    T_TMII mTmiInterface; // reference will also work
+};
+
+using TmiInterface = SoftTmiFastInterface<DIO_PIN, CLK_PIN, DELAY_MICROS>;
+TmiInterface tmiInterface;
+MyClass<TmiInterface> myClass(tmiInterface);
+
+void setup() {
+  tmiInterface.begin();
+  ...
+}
 ```
 
 <a name="SystemRequirements"></a>
