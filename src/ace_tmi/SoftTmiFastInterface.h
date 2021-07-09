@@ -58,15 +58,14 @@ namespace ace_tmi {
  * generate only a single template instantiation. I have not currently done any
  * experiments to see where the break-even point would be.
  *
- * On AVR processors, `delayMicroseconds()` is not accurate below 3
- * microseconds. Some microcontrollers may support better accuracy and may
- * work well with values as low as 1 microsecond.
+ * The `delayMicroseconds()` may not be accurate for small values on some
+ * processors (e.g. AVR) . The actual minimum value of T_DELAY_MICROS will
+ * depend on the capacitance and resistance on the DIO and CLK lines, and the
+ * accuracy of the `delayMicroseconds()` function.
  *
  * @tparam T_DIO_PIN pin attached to the data line
  * @tparam T_CLK_PIN pin attached to the clock line
- * @tparam T_DELAY_MICROS delay after each bit transition of DIO or CLK.. Should
- *    be greater or equal to 3 microseconds on AVR processors, but may work as
- *    low as 1 microsecond on other microcontrollers.
+ * @tparam T_DELAY_MICROS delay after each bit transition of DIO or CLK
  */
 template <
     uint8_t T_DIO_PIN,
@@ -75,6 +74,7 @@ template <
 >
 class SoftTmiFastInterface {
   public:
+    /** Constructor. */
     explicit SoftTmiFastInterface() = default;
 
     /** Initialize the dio and clk pins.

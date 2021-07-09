@@ -65,15 +65,15 @@ class SoftTmiInterface {
     /**
      * Constructor.
      *
-     * On AVR processors, `delayMicroseconds()` is not accurate below 3
-     * microseconds. Some microcontrollers may support better accuracy and may
-     * work well with values as low as 1 microsecond.
+     * The `delayMicroseconds()` may not be accurate for small values on some
+     * processors (e.g. AVR) . The actual minimum value of delayMicro will
+     * depend on the capacitance and resistance on the DIO and CLK lines, and
+     * the accuracy of the `delayMicroseconds()` function.
+     *
      *
      * @param dioPin pin attached to the data line
      * @param clkPin pin attached to the clock line
-     * @param delayMicros delay after each bit transition of DIO or CLK. Should
-     *    be greater or equal to 3 microseconds on AVR processors, but may work
-     *    as low as 1 microsecond on other microcontrollers.
+     * @param delayMicros delay after each bit transition of DIO or CLK
      */
     explicit SoftTmiInterface(
         uint8_t dioPin,
