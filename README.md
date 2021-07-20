@@ -48,6 +48,7 @@ this lower-level library.
     * [Unified Interface](#UnifiedInterface)
     * [SoftTmiInterface](#SoftTmiInterface)
     * [SoftTmiFastInterface](#SoftTmiFastInterface)
+    * [Storing Interface Objects](#StoringInterfaceObjects)
 * [System Requirements](#SystemRequirements)
     * [Hardware](#Hardware)
     * [Tool Chain](#ToolChain)
@@ -223,7 +224,7 @@ class MyClass {
     }
 
   private:
-    T_TMII mTmiInterface; // reference will also work
+    T_TMII mTmiInterface; // copied by value
 };
 
 const uint8_t CLK_PIN = 8;
@@ -303,6 +304,39 @@ void setup() {
   ...
 }
 ```
+
+<a name="StoringInterfaceObjects"></a>
+### Storing Interface Objects
+
+In the above examples, the `MyClass` object holds the `T_TMII` interface object
+**by value**. In other words, the interface object is copied into the `MyClass`
+object. This is efficient because interface objects are very small in size, and
+copying them by-value avoids an extra level of indirection when they are used
+inside the `MyClass` object.
+
+The alternative is to save the `T_TMII` object **by reference** like this:
+
+```C++
+template <typename T_TMII>
+class MyClass {
+  public:
+    explicit MyClass(T_TMII& tmiInterface)
+        : mTmiInterface(tmiInterface)
+    {...}
+
+    [...]
+
+  private:
+    T_TMII& mTmiInterface; // copied by reference
+};
+```
+
+The internal size of the `SoftTmiInterface` object is just 3 bytes, and the size
+of the `SoftTmiFastInterface` is even smaller at 0 bytes, so we do not save much
+memory by storing these by reference. But storing the `mTmiInterface` as a
+reference causes an unnecessary extra layer of indirection every time the
+`mTmiInterface` object is called. In almost every case, I recommend storing the
+`XxxInterface` object **by value** into the `MyClass` object.
 
 <a name="SystemRequirements"></a>
 ## System Requirements
