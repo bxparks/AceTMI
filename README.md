@@ -8,19 +8,26 @@ runtime polymorphism to avoid the overhead of the `virtual` keyword.
 
 The code was initially part of the
 [AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
-into a separate library so that it can be shared with other projects. It
-provides the following implementations:
+into a separate library for consistency with the
+[AceWire](https://github.com/bxparks/AceWire) and
+[AceSPI](https://github.com/bxparks/AceSPI) libraries. It provides the following
+implementations:
 
 * `SoftTmiInterface.h`
     * Implements the TM1637 protocol using `digitalWrite()`.
 * `SoftTmiFastInterface.h`
     * Implements the TM1637 protocol using `digitalWriteFast()`.
 
-The "TMI" acronym is an invention of this library so that the TM1637 protocol
-can be referenced by a name. It stands for "Titan Micro Interface" which is
-named after the company Titan Micro Electronics which manufactures the TM1637
-chip. The TM1637 protocol is electrically very similar to I2C, but different
-enough that we cannot use the hardware `<Wire.h>` library.
+The "TMI" acronym was invented by this library to name the protocol used by the
+TM1637 chip. It stands for "Titan Micro Interface", named after Titan Micro
+Electronics which manufactures the TM1637 chip. The TM1637 protocol is
+electrically very similar to I2C, but different enough that we cannot use the
+`<Wire.h>` I2C library.
+
+The protocol implemented by this library works only for the TM1637 chip as far
+as I know. Most people will want to use the `Tm1637Module` class in the
+[AceSegment](https://github.com/bxparks/AceSegment) library instead of using
+this lower-level library.
 
 **Version**: 0.1 (2021-06-24)
 
@@ -129,9 +136,9 @@ library. To use the "Fast" versions, use something like the following:'
 ### Unified Interface
 
 The classes in this library provide the following unified interface for handling
-TM1637 communication. Downstream classes can code against this unified interface
-using C++ templates so that different implementations can be selected at
-compile-time.
+communication with the TM1637 chip. Downstream classes can code against this
+unified interface using C++ templates so that different implementations can be
+selected at compile-time.
 
 ```C++
 class XxxInterface {
@@ -159,29 +166,69 @@ require the downstream classes to be implemented using C++ templates.
 ### SoftTmiInterface
 
 The `SoftTmiInterface` can be used like this to communicate with a TM1637
-controller chip:
+controller chip. It looks like this:
+
+```C++
+class SoftTmiInterface {
+  public:
+    explicit SoftTmiInterface(
+        uint8_t dioPin,
+        uint8_t clkPin,
+        uint8_t delayMicros
+    ) :
+        mDioPin(dioPin),
+        mClkPin(clkPin),
+        mDelayMicros(delayMicros)
+    {}
+
+    void begin() {...}
+    void end() {...}
+
+    void startCondition() {...}
+    void stopCondition() {...}
+    uint8_t sendByte(uint8_t data) {...}
+};
+```
+
+It is configured and used by the calling code `MyClass` like this:
 
 ```C++
 #include <Arduino.h>
 #include <AceTMI.h>
 using ace_tmi::SoftTmiInterface;
 
-const uint8_t CLK_PIN = 8;
-const uint8_t DIO_PIN = 9;
-const uint8_t DELAY_MICROS = 100;
-
 template <typename T_TMII>
 class MyClass {
   public:
-    MyClass(T_TMII& tmiInterface)
+    explicit MyClass(T_TMII& tmiInterface)
         : mTmiInterface(tmiInterface)
-    { ... }
+    {...}
 
-    [...]
+    void sendData() {
+      // Set brightness.
+      mTmiInterface.startCondition();
+      mTmiInterface.sendByte(brightness);
+      mTmiInterface.stopCondition();
+
+      // Set addressing mode.
+      mTmiInterface.startCondition();
+      mTmiInterface.sendByte(addressMode);
+      mTmiInterface.stopCondition();
+
+      // Send data bytes.
+      mTmiInterface.startCondition();
+      mTmiInterface.sendByte(otherCommand);
+      [...]
+      mTmiInterface.stopCondition();
+    }
 
   private:
     T_TMII mTmiInterface; // reference will also work
 };
+
+const uint8_t CLK_PIN = 8;
+const uint8_t DIO_PIN = 9;
+const uint8_t DELAY_MICROS = 100;
 
 using TmiInterface = SoftTmiInterface;
 TmiInterface tmiInterface(DIO_PIN, CLK_PIN, DELAY_MICROS);
@@ -206,7 +253,28 @@ TM1637 protocol, and the second referring to classes in this library.
 ### SoftTmiFastInterface
 
 The `SoftTmiFastInterface` is identical to `SoftTmiInterface` except that it
-uses `digitalWriteFast()`:
+uses `digitalWriteFast()`. It looks like this:
+
+```C++
+template <
+    uint8_t T_DIO_PIN,
+    uint8_t T_CLK_PIN,
+    uint8_t T_DELAY_MICROS
+>
+class SoftTmiFastInterface {
+  public:
+    explicit SoftTmiFastInterface() = default;
+
+    void begin() {...}
+    void end() {...}
+
+    void startCondition() {...}
+    void stopCondition() {...}
+    uint8_t sendByte(uint8_t data) {...}
+};
+```
+
+It is configured and used by the calling code `MyClass` like this:
 
 ```C++
 #include <Arduino.h>
@@ -223,15 +291,7 @@ const uint8_t DELAY_MICROS = 100;
 
 template <typename T_TMII>
 class MyClass {
-  public:
-    MyClass(T_TMII& tmiInterface)
-        : mTmiInterface(tmiInterface)
-    { ... }
-
-    [...]
-
-  private:
-    T_TMII mTmiInterface; // reference will also work
+  // Exactly same as above.
 };
 
 using TmiInterface = SoftTmiFastInterface<DIO_PIN, CLK_PIN, DELAY_MICROS>;

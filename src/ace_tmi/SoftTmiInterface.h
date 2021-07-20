@@ -70,7 +70,6 @@ class SoftTmiInterface {
      * depend on the capacitance and resistance on the DIO and CLK lines, and
      * the accuracy of the `delayMicroseconds()` function.
      *
-     *
      * @param dioPin pin attached to the data line
      * @param clkPin pin attached to the clock line
      * @param delayMicros delay after each bit transition of DIO or CLK
