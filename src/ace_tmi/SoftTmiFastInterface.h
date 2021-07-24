@@ -126,7 +126,7 @@ class SoftTmiFastInterface {
      * does not seem to cause any problems with the LED modules that I have
      * tested.
      *
-     * @return 0 means ACK, 1 means NACK.
+     * @return 1 if device responded with ACK, 0 for NACK.
      */
     uint8_t sendByte(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
@@ -136,11 +136,17 @@ class SoftTmiFastInterface {
           dataLow();
         }
         clockHigh();
+        // An extra bitDelay() here would make the HIGH and LOW states symmetric
+        // in duration (if digitalWriteFast() is assumed to be infinitely fast,
+        // which it is definitely not). But actual devices that I have tested
+        // seem to support the absence of that extra delay. So let's ignore it
+        // to make the transfer speed faster.
         clockLow();
         data >>= 1;
       }
 
-      return readAck();
+      uint8_t ack = readAck();
+      return ack ^ 0x1; // invert the 0 and 1
     }
 
     // Use default copy constructor and assignment operator.
@@ -151,6 +157,8 @@ class SoftTmiFastInterface {
     /**
      * Read the ACK/NACK bit from the device upon the falling edge of the 8th
      * CLK, which happens in the sendByte() loop above.
+     *
+     * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
      */
     uint8_t readAck() const {
       // Go into INPUT mode, reusing dataHigh(), saving 6 flash bytes on AVR.
