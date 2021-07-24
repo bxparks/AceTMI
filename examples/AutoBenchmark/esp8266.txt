@@ -1,0 +1,5 @@
+SIZEOF
+sizeof(SoftTmiInterface): 3
+BENCHMARKS
+SoftTmiInterface,1us 392 395 433 20
+END
