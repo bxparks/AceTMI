@@ -49,6 +49,9 @@ this lower-level library.
     * [SoftTmiInterface](#SoftTmiInterface)
     * [SoftTmiFastInterface](#SoftTmiFastInterface)
     * [Storing Interface Objects](#StoringInterfaceObjects)
+* [Resource Consumption](#ResourceConsumption)
+    * [Flash And Static Memory](#FlashAndStaticMemory)
+    * [CPU Cycles](#CpuCycles)
 * [System Requirements](#SystemRequirements)
     * [Hardware](#Hardware)
     * [Tool Chain](#ToolChain)
@@ -337,6 +340,67 @@ memory by storing these by reference. But storing the `mTmiInterface` as a
 reference causes an unnecessary extra layer of indirection every time the
 `mTmiInterface` object is called. In almost every case, I recommend storing the
 `XxxInterface` object **by value** into the `MyClass` object.
+
+<a name="ResourceConsumption"></a>
+## Resource Consumption
+
+<a name="FlashAndStaticMemory"></a>
+### Flash And Static Memory
+
+The Memory benchmark numbers can be seen in
+[examples/MemoryBenchmark](examples/MemoryBenchmark). Here are 2 samples:
+
+**Arduino Nano**
+
+```
++--------------------------------------------------------------+
+| functionality                   |  flash/  ram |       delta |
+|---------------------------------+--------------+-------------|
+| baseline                        |    456/   11 |     0/    0 |
+|---------------------------------+--------------+-------------|
+| SoftTmiInterface                |   1200/   14 |   744/    3 |
+| SoftTmiFastInterface            |    638/   11 |   182/    0 |
++--------------------------------------------------------------+
+```
+
+**ESP8266**
+
+```
++--------------------------------------------------------------+
+| functionality                   |  flash/  ram |       delta |
+|---------------------------------+--------------+-------------|
+| baseline                        | 256700/26784 |     0/    0 |
+|---------------------------------+--------------+-------------|
+| SoftTmiInterface                | 257588/26796 |   888/   12 |
++--------------------------------------------------------------+
+```
+
+<a name="CpuCycles"></a>
+### CPU Cycles
+
+The CPU benchmark numbers can be seen in
+[examples/AutoBenchmark](examples/AutoBenchmark). Here are 2 samples:
+
+**Arduino Nano**
+
+```
++-----------------------------------------+-------------------+----------+
+| Functionality                           |   min/  avg/  max | eff kbps |
+|-----------------------------------------+-------------------+----------|
+| SoftTmiInterface,1us                    |   752/  781/  836 |     41.0 |
+| SoftTmiFastInterface,1us                |    76/   83/   84 |    385.5 |
++-----------------------------------------+-------------------+----------+
+```
+
+**ESP8266**
+
+```
++-----------------------------------------+-------------------+----------+
+| Functionality                           |   min/  avg/  max | eff kbps |
+|-----------------------------------------+-------------------+----------|
+| SoftTmiInterface,1us                    |   392/  395/  433 |     81.0 |
++-----------------------------------------+-------------------+----------+
+```
 
 <a name="SystemRequirements"></a>
 ## System Requirements
