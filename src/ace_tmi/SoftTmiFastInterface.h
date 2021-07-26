@@ -155,7 +155,7 @@ class SoftTmiFastInterface {
 
   private:
     /**
-     * Read the ACK/NACK bit from the device upon the falling edge of the 8th
+     * Read the ACK/NACK bit from the device after the falling edge of the 8th
      * CLK, which happens in the sendByte() loop above.
      *
      * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
@@ -163,10 +163,13 @@ class SoftTmiFastInterface {
     uint8_t readAck() const {
       // Go into INPUT mode, reusing dataHigh(), saving 6 flash bytes on AVR.
       dataHigh();
+
+      // DIO is supposed to remain stable after CLK is set HIGH.
+      clockHigh();
+
       uint8_t ack = digitalReadFast(T_DIO_PIN);
 
       // Device releases DIO upon falling edge of the 9th CLK.
-      clockHigh();
       clockLow();
       return ack;
     }
