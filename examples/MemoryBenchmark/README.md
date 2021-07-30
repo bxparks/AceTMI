@@ -67,8 +67,8 @@ $ make README.md
 The following shows the flash and static memory sizes of the `MemoryBenchmark`
 program for various `LedModule` configurations and various Writer classes.
 
-* `SoftTmiInterface`: implementation using `digitalWrite()`
-* `SoftTmiFastInterface`: implementation using `digitalWriteFast()`
+* `SimpleTmiInterface`: implementation using `digitalWrite()`
+* `SimpleTmiFastInterface`: implementation using `digitalWriteFast()`
 
 ### ATtiny85
 
@@ -82,8 +82,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |    260/   11 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |    924/   14 |   664/    3 |
-| SoftTmiFastInterface            |    374/   11 |   114/    0 |
+| SimpleTmiInterface              |    924/   14 |   664/    3 |
+| SimpleTmiFastInterface          |    374/   11 |   114/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -100,8 +100,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |    456/   11 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |   1200/   14 |   744/    3 |
-| SoftTmiFastInterface            |    638/   11 |   182/    0 |
+| SimpleTmiInterface              |   1200/   14 |   744/    3 |
+| SimpleTmiFastInterface          |    638/   11 |   182/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -118,8 +118,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |   3472/  151 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |   4292/  154 |   820/    3 |
-| SoftTmiFastInterface            |   3654/  151 |   182/    0 |
+| SimpleTmiInterface              |   4292/  154 |   820/    3 |
+| SimpleTmiFastInterface          |   3654/  151 |   182/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -136,7 +136,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |   9940/    0 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |  10308/    0 |   368/    0 |
+| SimpleTmiInterface              |  10308/    0 |   368/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -153,7 +153,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |  21420/ 3536 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |  24016/ 3560 |  2596/   24 |
+| SimpleTmiInterface              |  24016/ 3560 |  2596/   24 |
 +--------------------------------------------------------------+
 
 ```
@@ -170,7 +170,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        | 256700/26784 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                | 257588/26796 |   888/   12 |
+| SimpleTmiInterface              | 257588/26796 |   888/   12 |
 +--------------------------------------------------------------+
 
 ```
@@ -187,7 +187,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        | 197748/13084 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                | 199202/13256 |  1454/  172 |
+| SimpleTmiInterface              | 199202/13256 |  1454/  172 |
 +--------------------------------------------------------------+
 
 ```
@@ -205,7 +205,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |  10880/ 4152 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |  12208/ 4156 |  1328/    4 |
+| SimpleTmiInterface              |  12208/ 4156 |  1328/    4 |
 +--------------------------------------------------------------+
 
 ```

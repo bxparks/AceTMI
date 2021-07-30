@@ -13,9 +13,9 @@ into a separate library for consistency with the
 [AceSPI](https://github.com/bxparks/AceSPI) libraries. It provides the following
 implementations:
 
-* `SoftTmiInterface.h`
+* `SimpleTmiInterface.h`
     * Implements the TM1637 protocol using `digitalWrite()`.
-* `SoftTmiFastInterface.h`
+* `SimpleTmiFastInterface.h`
     * Implements the TM1637 protocol using `digitalWriteFast()`.
 
 The "TMI" acronym was invented by this library to name the protocol used by the
@@ -46,8 +46,8 @@ this lower-level library.
 * [Usage](#Usage)
     * [Include Header and Namespace](#HeaderAndNamespace)
     * [Unified Interface](#UnifiedInterface)
-    * [SoftTmiInterface](#SoftTmiInterface)
-    * [SoftTmiFastInterface](#SoftTmiFastInterface)
+    * [SimpleTmiInterface](#SimpleTmiInterface)
+    * [SimpleTmiFastInterface](#SimpleTmiFastInterface)
     * [Storing Interface Objects](#StoringInterfaceObjects)
 * [Resource Consumption](#ResourceConsumption)
     * [Flash And Static Memory](#FlashAndStaticMemory)
@@ -88,7 +88,7 @@ The source files are organized as follows:
 
 The main `AceTMI.h` does not depend any external libraries.
 
-The "Fast" version (`SoftTmiFastInterface.h`)
+The "Fast" version (`SimpleTmiFastInterface.h`)
 depend on one of the digitalWriteFast libraries, for example:
 
 * https://github.com/watterott/Arduino-Libs/tree/master/digitalWriteFast
@@ -118,7 +118,7 @@ prepending the `ace_tmi::` prefix, use the `using` directive:
 ```C++
 #include <Arduino.h>
 #include <AceTMI.h>
-using ace_tmi::SoftTmiInterface;
+using ace_tmi::SimpleTmiInterface;
 ```
 
 The "Fast" versions are not included automatically by `AceTMI.h` because they
@@ -131,8 +131,8 @@ library. To use the "Fast" versions, use something like the following:'
 
 #if defined(ARDUINO_ARCH_AVR)
   #include <digitalWriteFast.h>
-  #include <ace_tmi/SoftTmiFastInterface.h>
-  using ace_tmi::SoftTmiFastInterface;
+  #include <ace_tmi/SimpleTmiFastInterface.h>
+  using ace_tmi::SimpleTmiFastInterface;
 #endif
 ```
 
@@ -166,16 +166,16 @@ the digitalWriteFast libraries which use compile-time constants for pin numbers.
 The disadvantage is that this library is harder to use because these classes
 require the downstream classes to be implemented using C++ templates.
 
-<a name="SoftTmiInterface"></a>
-### SoftTmiInterface
+<a name="SimpleTmiInterface"></a>
+### SimpleTmiInterface
 
-The `SoftTmiInterface` can be used like this to communicate with a TM1637
+The `SimpleTmiInterface` can be used like this to communicate with a TM1637
 controller chip. It looks like this:
 
 ```C++
-class SoftTmiInterface {
+class SimpleTmiInterface {
   public:
-    explicit SoftTmiInterface(
+    explicit SimpleTmiInterface(
         uint8_t dioPin,
         uint8_t clkPin,
         uint8_t delayMicros
@@ -199,7 +199,7 @@ It is configured and used by the calling code `MyClass` like this:
 ```C++
 #include <Arduino.h>
 #include <AceTMI.h>
-using ace_tmi::SoftTmiInterface;
+using ace_tmi::SimpleTmiInterface;
 
 template <typename T_TMII>
 class MyClass {
@@ -234,7 +234,7 @@ const uint8_t CLK_PIN = 8;
 const uint8_t DIO_PIN = 9;
 const uint8_t DELAY_MICROS = 100;
 
-using TmiInterface = SoftTmiInterface;
+using TmiInterface = SimpleTmiInterface;
 TmiInterface tmiInterface(DIO_PIN, CLK_PIN, DELAY_MICROS);
 MyClass<TmiInterface> myClass(tmiInterface);
 
@@ -253,10 +253,10 @@ with too many `#define` macros defined in the global namespace on Arduino
 platforms. The double `II` contains 2 `Interface`, the first referring to the
 TM1637 protocol, and the second referring to classes in this library.
 
-<a name="SoftTmiFastInterface"></a>
-### SoftTmiFastInterface
+<a name="SimpleTmiFastInterface"></a>
+### SimpleTmiFastInterface
 
-The `SoftTmiFastInterface` is identical to `SoftTmiInterface` except that it
+The `SimpleTmiFastInterface` is identical to `SimpleTmiInterface` except that it
 uses `digitalWriteFast()`. It looks like this:
 
 ```C++
@@ -265,9 +265,9 @@ template <
     uint8_t T_CLK_PIN,
     uint8_t T_DELAY_MICROS
 >
-class SoftTmiFastInterface {
+class SimpleTmiFastInterface {
   public:
-    explicit SoftTmiFastInterface() = default;
+    explicit SimpleTmiFastInterface() = default;
 
     void begin() {...}
     void end() {...}
@@ -285,8 +285,8 @@ It is configured and used by the calling code `MyClass` like this:
 #include <AceTMI.h>
 #if defined(ARDUINO_ARCH_AVR)
   #include <digitalWriteFast.h>
-  #include <ace_tmi/SoftTmiFastInterface.h>
-  using ace_tmi::SoftTmiInterface;
+  #include <ace_tmi/SimpleTmiFastInterface.h>
+  using ace_tmi::SimpleTmiInterface;
 #endif
 
 const uint8_t CLK_PIN = 8;
@@ -298,7 +298,7 @@ class MyClass {
   // Exactly same as above.
 };
 
-using TmiInterface = SoftTmiFastInterface<DIO_PIN, CLK_PIN, DELAY_MICROS>;
+using TmiInterface = SimpleTmiFastInterface<DIO_PIN, CLK_PIN, DELAY_MICROS>;
 TmiInterface tmiInterface;
 MyClass<TmiInterface> myClass(tmiInterface);
 
@@ -334,8 +334,8 @@ class MyClass {
 };
 ```
 
-The internal size of the `SoftTmiInterface` object is just 3 bytes, and the size
-of the `SoftTmiFastInterface` is even smaller at 0 bytes, so we do not save much
+The internal size of the `SimpleTmiInterface` object is just 3 bytes, and the size
+of the `SimpleTmiFastInterface` is even smaller at 0 bytes, so we do not save much
 memory by storing these by reference. But storing the `mTmiInterface` as a
 reference causes an unnecessary extra layer of indirection every time the
 `mTmiInterface` object is called. In almost every case, I recommend storing the
@@ -358,8 +358,8 @@ The Memory benchmark numbers can be seen in
 |---------------------------------+--------------+-------------|
 | baseline                        |    456/   11 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                |   1200/   14 |   744/    3 |
-| SoftTmiFastInterface            |    638/   11 |   182/    0 |
+| SimpleTmiInterface              |   1200/   14 |   744/    3 |
+| SimpleTmiFastInterface          |    638/   11 |   182/    0 |
 +--------------------------------------------------------------+
 ```
 
@@ -371,7 +371,7 @@ The Memory benchmark numbers can be seen in
 |---------------------------------+--------------+-------------|
 | baseline                        | 256700/26784 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SoftTmiInterface                | 257588/26796 |   888/   12 |
+| SimpleTmiInterface              | 257588/26796 |   888/   12 |
 +--------------------------------------------------------------+
 ```
 
@@ -387,8 +387,8 @@ The CPU benchmark numbers can be seen in
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   752/  781/  836 |     41.0 |
-| SoftTmiFastInterface,1us                |    76/   83/   84 |    385.5 |
+| SimpleTmiInterface,1us                  |   752/  781/  836 |     41.0 |
+| SimpleTmiFastInterface,1us              |    76/   83/   84 |    385.5 |
 +-----------------------------------------+-------------------+----------+
 ```
 
@@ -398,7 +398,7 @@ The CPU benchmark numbers can be seen in
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   392/  395/  433 |     81.0 |
+| SimpleTmiInterface,1us                  |   392/  395/  433 |     81.0 |
 +-----------------------------------------+-------------------+----------+
 ```
 

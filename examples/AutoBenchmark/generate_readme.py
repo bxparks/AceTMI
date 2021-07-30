@@ -25,7 +25,7 @@ print(f"""\
 # AutoBenchmark
 
 This program measures the performance of various implementations of the TM1637
-protocol in the AceTMI library: `SoftTmiInterface` and `SoftTmiFastInterface`.
+protocol in the AceTMI library: `SimpleTmiInterface` and `SimpleTmiFastInterface`.
 
 **Version**: AceTMI v0.1+
 
@@ -90,8 +90,8 @@ number of `TimingStats::update()` calls that were made.
 
 The following tables show the number of microseconds taken by:
 
-* `SoftTmiInterface`
-* `SoftTmiFastInterface`
+* `SimpleTmiInterface`
+* `SimpleTmiFastInterface`
 
 On AVR processors, the "fast" options are available using one of the
 digitalWriteFast libraries whose `digitalWriteFast()` functions can be up to 50X

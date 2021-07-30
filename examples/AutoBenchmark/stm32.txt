@@ -1,5 +1,5 @@
 SIZEOF
-sizeof(SoftTmiInterface): 3
+sizeof(SimpleTmiInterface): 3
 BENCHMARKS
-SoftTmiInterface,1us 874 878 887 20
+SimpleTmiInterface,1us 874 878 887 20
 END

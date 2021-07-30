@@ -60,7 +60,7 @@ END {
   printf("| Functionality                           |   min/  avg/  max | eff kbps |\n")
   for (i = 0; i < TOTAL_BENCHMARKS; i++) {
     name = u[i]["name"]
-    if (name ~ /^SoftTmiInterface,1us$/) {
+    if (name ~ /^SimpleTmiInterface,1us$/) {
       printf("|-----------------------------------------+-------------------+----------|\n")
     }
 

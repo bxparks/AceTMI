@@ -34,7 +34,7 @@ SOFTWARE.
 
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
 #include <digitalWriteFast.h>
-#include <ace_tmi/SoftTmiFastInterface.h>
+#include <ace_tmi/SimpleTmiFastInterface.h>
 #endif
 
 using namespace ace_tmi;
@@ -108,20 +108,20 @@ void runBenchmark(
   printStats(name, timingStats, numSamples);
 }
 
-void runSoftTmi() {
-  using TmiInterface = SoftTmiInterface;
+void runSimpleTmi() {
+  using TmiInterface = SimpleTmiInterface;
   TmiInterface tmiInterface(DIO_PIN, CLK_PIN, BIT_DELAY);
   tmiInterface.begin();
-  runBenchmark(F("SoftTmiInterface,1us"), tmiInterface);
+  runBenchmark(F("SimpleTmiInterface,1us"), tmiInterface);
   tmiInterface.end();
 }
 
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
-void runSoftTmiFast() {
-  using TmiInterface = SoftTmiFastInterface<DIO_PIN, CLK_PIN, BIT_DELAY>;
+void runSimpleTmiFast() {
+  using TmiInterface = SimpleTmiFastInterface<DIO_PIN, CLK_PIN, BIT_DELAY>;
   TmiInterface tmiInterface;
   tmiInterface.begin();
-  runBenchmark(F("SoftTmiFastInterface,1us"), tmiInterface);
+  runBenchmark(F("SimpleTmiFastInterface,1us"), tmiInterface);
   tmiInterface.end();
 }
 #endif
@@ -131,9 +131,9 @@ void runSoftTmiFast() {
 //-----------------------------------------------------------------------------
 
 void runBenchmarks() {
-  runSoftTmi();
+  runSimpleTmi();
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
-  runSoftTmiFast();
+  runSimpleTmiFast();
 #endif
 }
 
@@ -142,12 +142,12 @@ void runBenchmarks() {
 //-----------------------------------------------------------------------------
 
 void printSizeOf() {
-  SERIAL_PORT_MONITOR.print(F("sizeof(SoftTmiInterface): "));
-  SERIAL_PORT_MONITOR.println(sizeof(SoftTmiInterface));
+  SERIAL_PORT_MONITOR.print(F("sizeof(SimpleTmiInterface): "));
+  SERIAL_PORT_MONITOR.println(sizeof(SimpleTmiInterface));
 
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
-  SERIAL_PORT_MONITOR.print(F("sizeof(SoftTmiFastInterface<4, 5, 100>): "));
-  SERIAL_PORT_MONITOR.println(sizeof(SoftTmiFastInterface<4, 5, 100>));
+  SERIAL_PORT_MONITOR.print(F("sizeof(SimpleTmiFastInterface<4, 5, 100>): "));
+  SERIAL_PORT_MONITOR.println(sizeof(SimpleTmiFastInterface<4, 5, 100>));
 #endif
 }
 

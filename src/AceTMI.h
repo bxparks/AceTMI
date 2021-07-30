@@ -47,10 +47,10 @@ SOFTWARE.
 #endif
 
 // Files exported by this main header file.
-#include "ace_tmi/SoftTmiInterface.h"
+#include "ace_tmi/SimpleTmiInterface.h"
 
 // The following are commented out because they work only on AVR platforms with
 // a suitable <digitalWriteFast.h> library.
-//#include "ace_tmi/SoftTmiFastInterface.h"
+//#include "ace_tmi/SimpleTmiFastInterface.h"
 
 #endif

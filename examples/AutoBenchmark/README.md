@@ -1,7 +1,7 @@
 # AutoBenchmark
 
 This program measures the performance of various implementations of the TM1637
-protocol in the AceTMI library: `SoftTmiInterface` and `SoftTmiFastInterface`.
+protocol in the AceTMI library: `SimpleTmiInterface` and `SimpleTmiFastInterface`.
 
 **Version**: AceTMI v0.1+
 
@@ -66,8 +66,8 @@ number of `TimingStats::update()` calls that were made.
 
 The following tables show the number of microseconds taken by:
 
-* `SoftTmiInterface`
-* `SoftTmiFastInterface`
+* `SimpleTmiInterface`
+* `SimpleTmiFastInterface`
 
 On AVR processors, the "fast" options are available using one of the
 digitalWriteFast libraries whose `digitalWriteFast()` functions can be up to 50X
@@ -84,15 +84,15 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
-sizeof(SoftTmiFastInterface<4, 5, 100>): 1
+sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmiFastInterface<4, 5, 100>): 1
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   752/  781/  836 |     41.0 |
-| SoftTmiFastInterface,1us                |    76/   83/   84 |    385.5 |
+| SimpleTmiInterface,1us                  |   752/  781/  836 |     41.0 |
+| SimpleTmiFastInterface,1us              |    76/   83/   84 |    385.5 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -106,15 +106,15 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
-sizeof(SoftTmiFastInterface<4, 5, 100>): 1
+sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmiFastInterface<4, 5, 100>): 1
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   752/  761/  768 |     42.0 |
-| SoftTmiFastInterface,1us                |    76/   77/   88 |    415.6 |
+| SimpleTmiInterface,1us                  |   752/  761/  768 |     42.0 |
+| SimpleTmiFastInterface,1us              |    76/   77/   88 |    415.6 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -127,13 +127,13 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
+sizeof(SimpleTmiInterface): 3
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   616/  619/  622 |     51.7 |
+| SimpleTmiInterface,1us                  |   616/  619/  622 |     51.7 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -146,13 +146,13 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
+sizeof(SimpleTmiInterface): 3
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   874/  878/  887 |     36.4 |
+| SimpleTmiInterface,1us                  |   874/  878/  887 |     36.4 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -165,13 +165,13 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
+sizeof(SimpleTmiInterface): 3
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   392/  395/  433 |     81.0 |
+| SimpleTmiInterface,1us                  |   392/  395/  433 |     81.0 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -184,13 +184,13 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
+sizeof(SimpleTmiInterface): 3
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   239/  242/  248 |    132.2 |
+| SimpleTmiInterface,1us                  |   239/  242/  248 |    132.2 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -204,13 +204,13 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SoftTmiInterface): 3
+sizeof(SimpleTmiInterface): 3
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SoftTmiInterface,1us                    |   167/  167/  170 |    191.6 |
+| SimpleTmiInterface,1us                  |   167/  167/  170 |    191.6 |
 +-----------------------------------------+-------------------+----------+
 
 ```

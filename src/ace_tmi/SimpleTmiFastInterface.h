@@ -22,70 +22,62 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ACE_TMI_SOFT_TMI_INTERFACE_H
-#define ACE_TMI_SOFT_TMI_INTERFACE_H
+#ifndef ACE_TMI_SIMPLE_TMI_FAST_INTERFACE_H
+#define ACE_TMI_SIMPLE_TMI_FAST_INTERFACE_H
 
-#include <Arduino.h>
+#include <stdint.h>
+#include <Arduino.h> // delayMicroseconds()
 
 namespace ace_tmi {
 
 /**
- * Class that knows how to communicate with a TM1637 chip. It uses a 2-wire
- * (Clock and a bidirectional DIO) protocol that is similar to I2C electrically.
- * Both the Clock and Data pins are open-drain which means a single transitor on
- * either the master or slave can pull the line LOW, but a pull-up resisotr is
- * required to set the line HIGH. Because these are open-drain, we must make
- * sure that the microcontroller does *not* actively drive these lines HIGH,
- * otherwise, the output pin of the MCU at 5V (HIGH) becomes directly connected
- * to the 0V (LOW) of the transistor on the device pulling it LOW, with no
- * current limiting resistor. Either of MCU or the device can become damaged. To
- * set the line HIGH or LOW, we set the output level to LOW, then use the
- * pinMode() function to either INPUT (to get a HIGH value) or OUTPUT (to get a
- * LOW value).
+ * Exactly the same as SimpleTmiInterface except that this uses the
+ * `digitalWriteFast` library on AVR processors. Normally, the digitalWriteFast
+ * library is used to get faster speeds over `digitalWrite()` and `pinMode()`
+ * functions. But speed of the `digitalWrite()` functions is not the limiting
+ * factor in this library because every bit flip is followed by a
+ * `delayMicroseconds()` which is far longer than the CPU cycle savings from
+ * `digitalWritFast()`.
  *
- * The logical protocol of the TM1637 is similar to I2C in the following ways:
+ * The reason that you may want to use `digitalWriteFast` library is because it
+ * consumes far less flash memory than normal `digitalWrite()`. The benchmarks
+ * in MemoryBenchmark shows that using this `SimpleTmiFastInterface` instead of
+ * `SimpleTmiInterface` saves 650-770 bytes of flash on an AVR processor.
  *
- *    * The start and stop conditions are the same.
- *    * Data transfer happens on the rising edge of the CLK signal.
- *    * The slave sends back a one-bit ACK/NACK after the 8th bit of the CLK.
+ * Word of caution: There is a use-case where the normal `SimpleTmiInterface`
+ * might consume less flash memory. If your application uses more than one
+ * TM1637 LED Module, you will need to create multiple instances of the
+ * `Tm1637Module`. But the pin numbers of this class must be a compile-time
+ * constants, so different pins means that a different template class is
+ * generated. Since the `Tm1637Module` class takes a `SimpleTmiFastInterface` as
+ * a template argument, each LED Module generate a new template instance of the
+ * `Tm1637Module` class.
  *
- * The difference is:
+ * When there are more than some number of TM1636 LED modules, it may actually
+ * be more efficient to use the non-fast `SimpleTmiInterface`, because you will
+ * generate only a single template instantiation. I have not currently done any
+ * experiments to see where the break-even point would be.
  *
- *    * There is no I2C address byte, so only a single TM1637 device can be on
- *      the bus.
- *    * The first byte sent to the TM1637 is a command byte.
- *    * The bytes are sent LSB first instead of the usual MSB first on I2C.
+ * The `delayMicroseconds()` may not be accurate for small values on some
+ * processors (e.g. AVR) . The actual minimum value of T_DELAY_MICROS will
+ * depend on the capacitance and resistance on the DIO and CLK lines, and the
+ * accuracy of the `delayMicroseconds()` function.
  *
- * Since the protocol does not match I2C, we cannot use the hardware I2C
- * capabilities of the microcontroller, so we have to implement a software
- * version of this protocol.
+ * @tparam T_DIO_PIN pin attached to the data line
+ * @tparam T_CLK_PIN pin attached to the clock line
+ * @tparam T_DELAY_MICROS delay after each bit transition of DIO or CLK
  */
-class SoftTmiInterface {
+template <
+    uint8_t T_DIO_PIN,
+    uint8_t T_CLK_PIN,
+    uint8_t T_DELAY_MICROS
+>
+class SimpleTmiFastInterface {
   public:
-    /**
-     * Constructor.
-     *
-     * The `delayMicroseconds()` may not be accurate for small values on some
-     * processors (e.g. AVR) . The actual minimum value of delayMicro will
-     * depend on the capacitance and resistance on the DIO and CLK lines, and
-     * the accuracy of the `delayMicroseconds()` function.
-     *
-     * @param dioPin pin attached to the data line
-     * @param clkPin pin attached to the clock line
-     * @param delayMicros delay after each bit transition of DIO or CLK
-     */
-    explicit SoftTmiInterface(
-        uint8_t dioPin,
-        uint8_t clkPin,
-        uint8_t delayMicros
-    ) :
-        mDioPin(dioPin),
-        mClkPin(clkPin),
-        mDelayMicros(delayMicros)
-    {}
+    /** Constructor. */
+    explicit SimpleTmiFastInterface() = default;
 
-    /**
-     * Initialize the dio and clk pins.
+    /** Initialize the dio and clk pins.
      *
      * These are open-drain lines, with pull-up resistors. We must not drive
      * them HIGH actively since that could damage the transitor at the other
@@ -94,8 +86,8 @@ class SoftTmiInterface {
      * to pull down.
      */
     void begin() const {
-      digitalWrite(mClkPin, LOW);
-      digitalWrite(mDioPin, LOW);
+      digitalWriteFast(T_CLK_PIN, LOW);
+      digitalWriteFast(T_DIO_PIN, LOW);
 
       // Begin with both lines at HIGH.
       clockHigh();
@@ -145,7 +137,7 @@ class SoftTmiInterface {
         }
         clockHigh();
         // An extra bitDelay() here would make the HIGH and LOW states symmetric
-        // in duration (if digitalWrite() is assumed to be infinitely fast,
+        // in duration (if digitalWriteFast() is assumed to be infinitely fast,
         // which it is definitely not). But actual devices that I have tested
         // seem to support the absence of that extra delay. So let's ignore it
         // to make the transfer speed faster.
@@ -158,8 +150,8 @@ class SoftTmiInterface {
     }
 
     // Use default copy constructor and assignment operator.
-    SoftTmiInterface(const SoftTmiInterface&) = default;
-    SoftTmiInterface& operator=(const SoftTmiInterface&) = default;
+    SimpleTmiFastInterface(const SimpleTmiFastInterface&) = default;
+    SimpleTmiFastInterface& operator=(const SimpleTmiFastInterface&) = default;
 
   private:
     /**
@@ -169,33 +161,32 @@ class SoftTmiInterface {
      * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
      */
     uint8_t readAck() const {
-      // Go into INPUT mode, reusing dataHigh(), saving 10 flash bytes on AVR.
+      // Go into INPUT mode, reusing dataHigh(), saving 6 flash bytes on AVR.
       dataHigh();
 
       // DIO is supposed to remain stable after CLK is set HIGH.
       clockHigh();
 
-      uint8_t ack = digitalRead(mDioPin);
+      uint8_t ack = digitalReadFast(T_DIO_PIN);
 
       // Device releases DIO upon falling edge of the 9th CLK.
       clockLow();
       return ack;
     }
 
-    void bitDelay() const { delayMicroseconds(mDelayMicros); }
+    // The following methods use compile-time constants from the template
+    // parameters. The compiler will optimize away the 'this' pointer so that
+    // these methods become identical to calling static functions.
 
-    void clockHigh() const { pinMode(mClkPin, INPUT); bitDelay(); }
+    void bitDelay() const { delayMicroseconds(T_DELAY_MICROS); }
 
-    void clockLow() const { pinMode(mClkPin, OUTPUT); bitDelay(); }
+    void clockHigh() const { pinModeFast(T_CLK_PIN, INPUT); bitDelay(); }
 
-    void dataHigh() const { pinMode(mDioPin, INPUT); bitDelay(); }
+    void clockLow() const { pinModeFast(T_CLK_PIN, OUTPUT); bitDelay(); }
 
-    void dataLow() const { pinMode(mDioPin, OUTPUT); bitDelay(); }
+    void dataHigh() const { pinModeFast(T_DIO_PIN, INPUT); bitDelay(); }
 
-  private:
-    uint8_t const mDioPin;
-    uint8_t const mClkPin;
-    uint8_t const mDelayMicros;
+    void dataLow() const { pinModeFast(T_DIO_PIN, OUTPUT); bitDelay(); }
 };
 
 } // ace_tmi

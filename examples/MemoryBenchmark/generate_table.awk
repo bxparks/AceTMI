@@ -7,8 +7,8 @@
 
 BEGIN {
   labels[0] = "baseline"
-  labels[1] = "SoftTmiInterface";
-  labels[2] = "SoftTmiFastInterface";
+  labels[1] = "SimpleTmiInterface";
+  labels[2] = "SimpleTmiFastInterface";
   record_index = 0
 }
 {
@@ -40,7 +40,7 @@ END {
   for (i = 1 ; i < NUM_ENTRIES; i++) {
     if (u[i]["flash"] == "-1") continue
 
-    if (labels[i] ~ /^SoftTmiInterface/) {
+    if (labels[i] ~ /^SimpleTmiInterface/) {
       printf(\
         "|---------------------------------+--------------+-------------|\n")
     }
