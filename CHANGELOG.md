@@ -1,6 +1,7 @@
 # Changelog
 
 * Unreleased
+* 0.2 (2021-07-30)
     * Add `examples/MemoryBenchmark` and `examples/AutoBenchmark` to calculate
       memory consumption and CPU speed.
     * Invert return value of `writeByte()`, returning 1 on success and 0 on

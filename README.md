@@ -29,7 +29,7 @@ as I know. Most people will want to use the `Tm1637Module` class in the
 [AceSegment](https://github.com/bxparks/AceSegment) library instead of using
 this lower-level library.
 
-**Version**: 0.1 (2021-06-24)
+**Version**: 0.2 (2021-07-30)
 
 **Changelog**: [CHANGELOG.md](CHANGELOG.md)
 

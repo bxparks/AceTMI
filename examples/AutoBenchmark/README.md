@@ -3,7 +3,7 @@
 This program measures the performance of various implementations of the TM1637
 protocol in the AceTMI library: `SimpleTmiInterface` and `SimpleTmiFastInterface`.
 
-**Version**: AceTMI v0.1+
+**Version**: AceTMI v0.2
 
 **DO NOT EDIT**: This file was auto-generated using `make README.md`.
 
@@ -59,7 +59,7 @@ number of `TimingStats::update()` calls that were made.
 
 ## CPU Time Changes
 
-**v0.1+:**
+**v0.2:**
 * Initial version extracted from AceSegment/AutoBenchmark.
 
 ## Results
