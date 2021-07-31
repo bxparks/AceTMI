@@ -37,8 +37,8 @@ SOFTWARE.
 #define ACE_TMI_H
 
 // Version format: xxyyzz == "xx.yy.zz"
-#define ACE_TMI_VERSION 100
-#define ACE_TMI_VERSION_STRING "0.1"
+#define ACE_TMI_VERSION 200
+#define ACE_TMI_VERSION_STRING "0.2"
 
 // Blacklist platforms using https://github.com/arduino/ArduinoCore-api due to
 // incompatibilities.
@@ -47,10 +47,10 @@ SOFTWARE.
 #endif
 
 // Files exported by this main header file.
-#include "ace_tmi/SoftTmiInterface.h"
+#include "ace_tmi/SimpleTmiInterface.h"
 
 // The following are commented out because they work only on AVR platforms with
 // a suitable <digitalWriteFast.h> library.
-//#include "ace_tmi/SoftTmiFastInterface.h"
+//#include "ace_tmi/SimpleTmiFastInterface.h"
 
 #endif

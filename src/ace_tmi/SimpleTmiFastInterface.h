@@ -22,12 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ACE_TMI_SOFT_TMI_FAST_INTERFACE_H
-#define ACE_TMI_SOFT_TMI_FAST_INTERFACE_H
-
-// This header file requires the digitalWriteFast library on AVR, or the
-// EpoxyMockDigitalWriteFast library on EpoxyDuino.
-#if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
+#ifndef ACE_TMI_SIMPLE_TMI_FAST_INTERFACE_H
+#define ACE_TMI_SIMPLE_TMI_FAST_INTERFACE_H
 
 #include <stdint.h>
 #include <Arduino.h> // delayMicroseconds()
@@ -35,7 +31,7 @@ SOFTWARE.
 namespace ace_tmi {
 
 /**
- * Exactly the same as SoftTmiInterface except that this uses the
+ * Exactly the same as SimpleTmiInterface except that this uses the
  * `digitalWriteFast` library on AVR processors. Normally, the digitalWriteFast
  * library is used to get faster speeds over `digitalWrite()` and `pinMode()`
  * functions. But speed of the `digitalWrite()` functions is not the limiting
@@ -45,41 +41,41 @@ namespace ace_tmi {
  *
  * The reason that you may want to use `digitalWriteFast` library is because it
  * consumes far less flash memory than normal `digitalWrite()`. The benchmarks
- * in MemoryBenchmark shows that using this `SoftTmiFastInterface` instead of
- * `SoftTmiInterface` saves 650-770 bytes of flash on an AVR processor.
+ * in MemoryBenchmark shows that using this `SimpleTmiFastInterface` instead of
+ * `SimpleTmiInterface` saves 650-770 bytes of flash on an AVR processor.
  *
- * Word of caution: There is a use-case where the normal `SoftTmiInterface`
+ * Word of caution: There is a use-case where the normal `SimpleTmiInterface`
  * might consume less flash memory. If your application uses more than one
  * TM1637 LED Module, you will need to create multiple instances of the
  * `Tm1637Module`. But the pin numbers of this class must be a compile-time
  * constants, so different pins means that a different template class is
- * generated. Since the `Tm1637Module` class takes a `SoftTmiFastInterface` as
+ * generated. Since the `Tm1637Module` class takes a `SimpleTmiFastInterface` as
  * a template argument, each LED Module generate a new template instance of the
  * `Tm1637Module` class.
  *
  * When there are more than some number of TM1636 LED modules, it may actually
- * be more efficient to use the non-fast `SoftTmiInterface`, because you will
+ * be more efficient to use the non-fast `SimpleTmiInterface`, because you will
  * generate only a single template instantiation. I have not currently done any
  * experiments to see where the break-even point would be.
  *
- * On AVR processors, `delayMicroseconds()` is not accurate below 3
- * microseconds. Some microcontrollers may support better accuracy and may
- * work well with values as low as 1 microsecond.
+ * The `delayMicroseconds()` may not be accurate for small values on some
+ * processors (e.g. AVR) . The actual minimum value of T_DELAY_MICROS will
+ * depend on the capacitance and resistance on the DIO and CLK lines, and the
+ * accuracy of the `delayMicroseconds()` function.
  *
  * @tparam T_DIO_PIN pin attached to the data line
  * @tparam T_CLK_PIN pin attached to the clock line
- * @tparam T_DELAY_MICROS delay after each bit transition of DIO or CLK.. Should
- *    be greater or equal to 3 microseconds on AVR processors, but may work as
- *    low as 1 microsecond on other microcontrollers.
+ * @tparam T_DELAY_MICROS delay after each bit transition of DIO or CLK
  */
 template <
     uint8_t T_DIO_PIN,
     uint8_t T_CLK_PIN,
     uint8_t T_DELAY_MICROS
 >
-class SoftTmiFastInterface {
+class SimpleTmiFastInterface {
   public:
-    explicit SoftTmiFastInterface() = default;
+    /** Constructor. */
+    explicit SimpleTmiFastInterface() = default;
 
     /** Initialize the dio and clk pins.
      *
@@ -130,7 +126,7 @@ class SoftTmiFastInterface {
      * does not seem to cause any problems with the LED modules that I have
      * tested.
      *
-     * @return 0 means ACK, 1 means NACK.
+     * @return 1 if device responded with ACK, 0 for NACK.
      */
     uint8_t sendByte(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
@@ -140,25 +136,40 @@ class SoftTmiFastInterface {
           dataLow();
         }
         clockHigh();
+        // An extra bitDelay() here would make the HIGH and LOW states symmetric
+        // in duration (if digitalWriteFast() is assumed to be infinitely fast,
+        // which it is definitely not). But actual devices that I have tested
+        // seem to support the absence of that extra delay. So let's ignore it
+        // to make the transfer speed faster.
         clockLow();
         data >>= 1;
       }
 
-      return readAck();
+      uint8_t ack = readAck();
+      return ack ^ 0x1; // invert the 0 and 1
     }
+
+    // Use default copy constructor and assignment operator.
+    SimpleTmiFastInterface(const SimpleTmiFastInterface&) = default;
+    SimpleTmiFastInterface& operator=(const SimpleTmiFastInterface&) = default;
 
   private:
     /**
-     * Read the ACK/NACK bit from the device upon the falling edge of the 8th
+     * Read the ACK/NACK bit from the device after the falling edge of the 8th
      * CLK, which happens in the sendByte() loop above.
+     *
+     * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
      */
     uint8_t readAck() const {
       // Go into INPUT mode, reusing dataHigh(), saving 6 flash bytes on AVR.
       dataHigh();
+
+      // DIO is supposed to remain stable after CLK is set HIGH.
+      clockHigh();
+
       uint8_t ack = digitalReadFast(T_DIO_PIN);
 
       // Device releases DIO upon falling edge of the 9th CLK.
-      clockHigh();
       clockLow();
       return ack;
     }
@@ -179,7 +190,5 @@ class SoftTmiFastInterface {
 };
 
 } // ace_tmi
-
-#endif // defined(ARDUINO_ARCH_AVR)
 
 #endif

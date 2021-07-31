@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ACE_TMI_SOFT_TMI_INTERFACE_H
-#define ACE_TMI_SOFT_TMI_INTERFACE_H
+#ifndef ACE_TMI_SIMPLE_TMI_INTERFACE_H
+#define ACE_TMI_SIMPLE_TMI_INTERFACE_H
 
 #include <Arduino.h>
 
@@ -60,22 +60,21 @@ namespace ace_tmi {
  * capabilities of the microcontroller, so we have to implement a software
  * version of this protocol.
  */
-class SoftTmiInterface {
+class SimpleTmiInterface {
   public:
     /**
      * Constructor.
      *
-     * On AVR processors, `delayMicroseconds()` is not accurate below 3
-     * microseconds. Some microcontrollers may support better accuracy and may
-     * work well with values as low as 1 microsecond.
+     * The `delayMicroseconds()` may not be accurate for small values on some
+     * processors (e.g. AVR) . The actual minimum value of delayMicro will
+     * depend on the capacitance and resistance on the DIO and CLK lines, and
+     * the accuracy of the `delayMicroseconds()` function.
      *
      * @param dioPin pin attached to the data line
      * @param clkPin pin attached to the clock line
-     * @param delayMicros delay after each bit transition of DIO or CLK. Should
-     *    be greater or equal to 3 microseconds on AVR processors, but may work
-     *    as low as 1 microsecond on other microcontrollers.
+     * @param delayMicros delay after each bit transition of DIO or CLK
      */
-    explicit SoftTmiInterface(
+    explicit SimpleTmiInterface(
         uint8_t dioPin,
         uint8_t clkPin,
         uint8_t delayMicros
@@ -135,7 +134,7 @@ class SoftTmiInterface {
      * does not seem to cause any problems with the LED modules that I have
      * tested.
      *
-     * @return 0 means ACK, 1 means NACK.
+     * @return 1 if device responded with ACK, 0 for NACK.
      */
     uint8_t sendByte(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
@@ -145,25 +144,40 @@ class SoftTmiInterface {
           dataLow();
         }
         clockHigh();
+        // An extra bitDelay() here would make the HIGH and LOW states symmetric
+        // in duration (if digitalWrite() is assumed to be infinitely fast,
+        // which it is definitely not). But actual devices that I have tested
+        // seem to support the absence of that extra delay. So let's ignore it
+        // to make the transfer speed faster.
         clockLow();
         data >>= 1;
       }
 
-      return readAck();
+      uint8_t ack = readAck();
+      return ack ^ 0x1; // invert the 0 and 1
     }
+
+    // Use default copy constructor and assignment operator.
+    SimpleTmiInterface(const SimpleTmiInterface&) = default;
+    SimpleTmiInterface& operator=(const SimpleTmiInterface&) = default;
 
   private:
     /**
-     * Read the ACK/NACK bit from the device upon the falling edge of the 8th
+     * Read the ACK/NACK bit from the device after the falling edge of the 8th
      * CLK, which happens in the sendByte() loop above.
+     *
+     * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
      */
     uint8_t readAck() const {
       // Go into INPUT mode, reusing dataHigh(), saving 10 flash bytes on AVR.
       dataHigh();
+
+      // DIO is supposed to remain stable after CLK is set HIGH.
+      clockHigh();
+
       uint8_t ack = digitalRead(mDioPin);
 
       // Device releases DIO upon falling edge of the 9th CLK.
-      clockHigh();
       clockLow();
       return ack;
     }

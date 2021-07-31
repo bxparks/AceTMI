@@ -1,0 +1,5 @@
+SIZEOF
+sizeof(SimpleTmiInterface): 3
+BENCHMARKS
+SimpleTmiInterface,1us 616 619 622 20
+END
