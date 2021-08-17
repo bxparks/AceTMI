@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.2.0</span>
+   &#160;<span id="projectnumber">0.3</span>
    </div>
    <div id="projectbrief">Unified interface for selecting different implementations for communicating with a TM1637 LED controller chip on Arduino platforms</div>
   </td>
@@ -95,15 +95,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:ac62c4931c0f813cb9c002da564d12e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc60e6299e2a9906150f12a08a78c0f6"><td class="memItemLeft" align="right" valign="top"><a id="afc60e6299e2a9906150f12a08a78c0f6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#afc60e6299e2a9906150f12a08a78c0f6">startCondition</a> () const</td></tr>
-<tr class="memdesc:afc60e6299e2a9906150f12a08a78c0f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C start condition. <br /></td></tr>
+<tr class="memdesc:afc60e6299e2a9906150f12a08a78c0f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like start condition. <br /></td></tr>
 <tr class="separator:afc60e6299e2a9906150f12a08a78c0f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16b97f7f7dc1abbb865e33436e674147"><td class="memItemLeft" align="right" valign="top"><a id="a16b97f7f7dc1abbb865e33436e674147"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a16b97f7f7dc1abbb865e33436e674147">stopCondition</a> () const</td></tr>
-<tr class="memdesc:a16b97f7f7dc1abbb865e33436e674147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C stop condition. <br /></td></tr>
+<tr class="memdesc:a16b97f7f7dc1abbb865e33436e674147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like stop condition. <br /></td></tr>
 <tr class="separator:a16b97f7f7dc1abbb865e33436e674147"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec2d70b9d434bd18f73e570878109352"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#aec2d70b9d434bd18f73e570878109352">sendByte</a> (uint8_t data) const</td></tr>
-<tr class="memdesc:aec2d70b9d434bd18f73e570878109352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmiFastInterface.html#aec2d70b9d434bd18f73e570878109352">More...</a><br /></td></tr>
-<tr class="separator:aec2d70b9d434bd18f73e570878109352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f47efb6173c6dc0fa8d08d5260749de"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de">write</a> (uint8_t data) const</td></tr>
+<tr class="memdesc:a5f47efb6173c6dc0fa8d08d5260749de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de">More...</a><br /></td></tr>
+<tr class="separator:a5f47efb6173c6dc0fa8d08d5260749de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07f09645f64e75d73c480ff5561bbc35"><td class="memItemLeft" align="right" valign="top"><a id="a07f09645f64e75d73c480ff5561bbc35"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SimpleTmiFastInterface</b> (const <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html">SimpleTmiFastInterface</a> &amp;)=default</td></tr>
 <tr class="separator:a07f09645f64e75d73c480ff5561bbc35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,8 +164,8 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_DELAY_MICROS&gt; </d
 
 </div>
 </div>
-<a id="aec2d70b9d434bd18f73e570878109352"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec2d70b9d434bd18f73e570878109352">&#9670;&nbsp;</a></span>sendByte()</h2>
+<a id="a5f47efb6173c6dc0fa8d08d5260749de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f47efb6173c6dc0fa8d08d5260749de">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +176,7 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_DELAY_MICROS&gt; </d
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html">ace_tmi::SimpleTmiFastInterface</a>&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;::sendByte </td>
+          <td class="memname">uint8_t <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html">ace_tmi::SimpleTmiFastInterface</a>&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;::write </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -192,9 +192,9 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_DELAY_MICROS&gt; </d
 
 <p>Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C. </p>
 <p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
-<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. (This retains consistency with AceWire's <code><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de" title="Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.">write()</a></code> method which returns the number of bytes transfered.) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiFastInterface_8h_source.html#l00131">131</a> of file <a class="el" href="SimpleTmiFastInterface_8h_source.html">SimpleTmiFastInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmiFastInterface_8h_source.html#l00133">133</a> of file <a class="el" href="SimpleTmiFastInterface_8h_source.html">SimpleTmiFastInterface.h</a>.</p>
 
 </div>
 </div>

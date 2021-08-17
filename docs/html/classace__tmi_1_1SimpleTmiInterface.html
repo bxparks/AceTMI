@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.2.0</span>
+   &#160;<span id="projectnumber">0.3</span>
    </div>
    <div id="projectbrief">Unified interface for selecting different implementations for communicating with a TM1637 LED controller chip on Arduino platforms</div>
   </td>
@@ -94,15 +94,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:af245b573d7ae197d980b870951078cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a587812128aee98f03720940ddddc744f"><td class="memItemLeft" align="right" valign="top"><a id="a587812128aee98f03720940ddddc744f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a587812128aee98f03720940ddddc744f">startCondition</a> () const</td></tr>
-<tr class="memdesc:a587812128aee98f03720940ddddc744f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C start condition. <br /></td></tr>
+<tr class="memdesc:a587812128aee98f03720940ddddc744f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like start condition. <br /></td></tr>
 <tr class="separator:a587812128aee98f03720940ddddc744f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae745d33c115acf4879f426f4991a0cd7"><td class="memItemLeft" align="right" valign="top"><a id="ae745d33c115acf4879f426f4991a0cd7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ae745d33c115acf4879f426f4991a0cd7">stopCondition</a> () const</td></tr>
-<tr class="memdesc:ae745d33c115acf4879f426f4991a0cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C stop condition. <br /></td></tr>
+<tr class="memdesc:ae745d33c115acf4879f426f4991a0cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like stop condition. <br /></td></tr>
 <tr class="separator:ae745d33c115acf4879f426f4991a0cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a534ae23a031c028e24dd64540f50783d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a534ae23a031c028e24dd64540f50783d">sendByte</a> (uint8_t data) const</td></tr>
-<tr class="memdesc:a534ae23a031c028e24dd64540f50783d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmiInterface.html#a534ae23a031c028e24dd64540f50783d">More...</a><br /></td></tr>
-<tr class="separator:a534ae23a031c028e24dd64540f50783d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c4066f59f449211b5ecf3448755b5e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e">write</a> (uint8_t data) const</td></tr>
+<tr class="memdesc:ac9c4066f59f449211b5ecf3448755b5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e">More...</a><br /></td></tr>
+<tr class="separator:ac9c4066f59f449211b5ecf3448755b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94115cbf79c461b071a39c9426b0bb49"><td class="memItemLeft" align="right" valign="top"><a id="a94115cbf79c461b071a39c9426b0bb49"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SimpleTmiInterface</b> (const <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html">SimpleTmiInterface</a> &amp;)=default</td></tr>
 <tr class="separator:a94115cbf79c461b071a39c9426b0bb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,8 +215,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a534ae23a031c028e24dd64540f50783d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a534ae23a031c028e24dd64540f50783d">&#9670;&nbsp;</a></span>sendByte()</h2>
+<a id="ac9c4066f59f449211b5ecf3448755b5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9c4066f59f449211b5ecf3448755b5e">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +225,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ace_tmi::SimpleTmiInterface::sendByte </td>
+          <td class="memname">uint8_t ace_tmi::SimpleTmiInterface::write </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
