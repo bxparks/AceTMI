@@ -100,7 +100,7 @@ class SimpleTmiFastInterface {
       dataHigh();
     }
 
-    /** Generate the I2C start condition. */
+    /** Generate the I2C-like start condition. */
     void startCondition() const {
       clockHigh();
       dataHigh();
@@ -109,7 +109,7 @@ class SimpleTmiFastInterface {
       clockLow();
     }
 
-    /** Generate the I2C stop condition. */
+    /** Generate the I2C-like stop condition. */
     void stopCondition() const {
       // clock will always be LOW when this is called
       dataLow();
@@ -126,9 +126,11 @@ class SimpleTmiFastInterface {
      * does not seem to cause any problems with the LED modules that I have
      * tested.
      *
-     * @return 1 if device responded with ACK, 0 for NACK.
+     * @return 1 if device responded with ACK, 0 for NACK. (This retains
+     *    consistency with AceWire's `write()` method which returns the number
+     *    of bytes transfered.)
      */
-    uint8_t sendByte(uint8_t data) const {
+    uint8_t write(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
         if (data & 0x1) {
           dataHigh();
@@ -156,7 +158,7 @@ class SimpleTmiFastInterface {
   private:
     /**
      * Read the ACK/NACK bit from the device after the falling edge of the 8th
-     * CLK, which happens in the sendByte() loop above.
+     * CLK, which happens in the write() loop above.
      *
      * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
      */
@@ -174,19 +176,15 @@ class SimpleTmiFastInterface {
       return ack;
     }
 
-    // The following methods use compile-time constants from the template
-    // parameters. The compiler will optimize away the 'this' pointer so that
-    // these methods become identical to calling static functions.
+    static void bitDelay() { delayMicroseconds(T_DELAY_MICROS); }
 
-    void bitDelay() const { delayMicroseconds(T_DELAY_MICROS); }
+    static void clockHigh() { pinModeFast(T_CLK_PIN, INPUT); bitDelay(); }
 
-    void clockHigh() const { pinModeFast(T_CLK_PIN, INPUT); bitDelay(); }
+    static void clockLow() { pinModeFast(T_CLK_PIN, OUTPUT); bitDelay(); }
 
-    void clockLow() const { pinModeFast(T_CLK_PIN, OUTPUT); bitDelay(); }
+    static void dataHigh() { pinModeFast(T_DIO_PIN, INPUT); bitDelay(); }
 
-    void dataHigh() const { pinModeFast(T_DIO_PIN, INPUT); bitDelay(); }
-
-    void dataLow() const { pinModeFast(T_DIO_PIN, OUTPUT); bitDelay(); }
+    static void dataLow() { pinModeFast(T_DIO_PIN, OUTPUT); bitDelay(); }
 };
 
 } // ace_tmi

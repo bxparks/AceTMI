@@ -108,7 +108,7 @@ class SimpleTmiInterface {
       dataHigh();
     }
 
-    /** Generate the I2C start condition. */
+    /** Generate the I2C-like start condition. */
     void startCondition() const {
       clockHigh();
       dataHigh();
@@ -117,7 +117,7 @@ class SimpleTmiInterface {
       clockLow();
     }
 
-    /** Generate the I2C stop condition. */
+    /** Generate the I2C-like stop condition. */
     void stopCondition() const {
       // clock will always be LOW when this is called
       dataLow();
@@ -136,7 +136,7 @@ class SimpleTmiInterface {
      *
      * @return 1 if device responded with ACK, 0 for NACK.
      */
-    uint8_t sendByte(uint8_t data) const {
+    uint8_t write(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
         if (data & 0x1) {
           dataHigh();
@@ -164,7 +164,7 @@ class SimpleTmiInterface {
   private:
     /**
      * Read the ACK/NACK bit from the device after the falling edge of the 8th
-     * CLK, which happens in the sendByte() loop above.
+     * CLK, which happens in the write() loop above.
      *
      * @return 0 for ACK (active LOW), 1 or NACK (passive HIGH).
      */

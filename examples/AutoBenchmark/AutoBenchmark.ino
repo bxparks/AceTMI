@@ -94,10 +94,10 @@ void runBenchmark(
     uint16_t startMicros = micros();
     tmiInterface.startCondition();
     // Send 4 bytes, approximating a 4-digit TM1637 LED module.
-    tmiInterface.sendByte(0x11);
-    tmiInterface.sendByte(0x22);
-    tmiInterface.sendByte(0x33);
-    tmiInterface.sendByte(0x44);
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x22);
+    tmiInterface.write(0x33);
+    tmiInterface.write(0x44);
     tmiInterface.stopCondition();
     uint16_t endMicros = micros();
 

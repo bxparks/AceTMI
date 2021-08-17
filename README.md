@@ -1,12 +1,7 @@
 # AceTMI
 
-Unified interface for selecting different implementations for communicating
-with a TM1637 LED controller chip on Arduino platforms. Uses C++ templates to
-achieve minimal or zero-cost runtime overhead for the abstraction.  In more
-technical terms, the library provides compile-time polymorphism instead of
-runtime polymorphism to avoid the overhead of the `virtual` keyword.
-
-The code was initially part of the
+Unified interface for communicating with a TM1637 LED controller chip on Arduino
+platforms. The code was initially part of the
 [AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
 into a separate library for consistency with the
 [AceWire](https://github.com/bxparks/AceWire) and
@@ -29,7 +24,11 @@ as I know. Most people will want to use the `Tm1637Module` class in the
 [AceSegment](https://github.com/bxparks/AceSegment) library instead of using
 this lower-level library.
 
-**Version**: 0.2 (2021-07-30)
+The library uses C++ templates to achieve minimal runtime overhead. In more
+technical terms, the library provides compile-time polymorphism instead of
+runtime polymorphism to avoid the overhead of the `virtual` keyword.
+
+**Version**: 0.3 (2021-08-17)
 
 **Changelog**: [CHANGELOG.md](CHANGELOG.md)
 
@@ -89,7 +88,7 @@ The source files are organized as follows:
 The main `AceTMI.h` does not depend any external libraries.
 
 The "Fast" version (`SimpleTmiFastInterface.h`)
-depend on one of the digitalWriteFast libraries, for example:
+depends on one of the digitalWriteFast libraries, for example:
 
 * https://github.com/watterott/Arduino-Libs/tree/master/digitalWriteFast
 * https://github.com/NicksonYap/digitalWriteFast
@@ -141,18 +140,18 @@ library. To use the "Fast" versions, use something like the following:'
 
 The classes in this library provide the following unified interface for handling
 communication with the TM1637 chip. Downstream classes can code against this
-unified interface using C++ templates so that different implementations can be
+generic API using C++ templates so that different implementations can be
 selected at compile-time.
 
 ```C++
 class XxxInterface {
   public:
-    void begin();
-    void end();
+    void begin() const;
+    void end() const;
 
-    void startCondition();
-    void stopCondition();
-    uint8_t sendByte(uint8_t data);
+    void startCondition() const;
+    void stopCondition() const;
+    uint8_t write(uint8_t data) const;
 };
 ```
 
@@ -179,18 +178,14 @@ class SimpleTmiInterface {
         uint8_t dioPin,
         uint8_t clkPin,
         uint8_t delayMicros
-    ) :
-        mDioPin(dioPin),
-        mClkPin(clkPin),
-        mDelayMicros(delayMicros)
-    {}
+    );
 
-    void begin() {...}
-    void end() {...}
+    void begin() const;
+    void end() const;
 
-    void startCondition() {...}
-    void stopCondition() {...}
-    uint8_t sendByte(uint8_t data) {...}
+    void startCondition() const;
+    void stopCondition() const;
+    uint8_t write(uint8_t data) const;
 };
 ```
 
@@ -209,20 +204,20 @@ class MyClass {
     {...}
 
     void sendData() {
-      // Set brightness.
-      mTmiInterface.startCondition();
-      mTmiInterface.sendByte(brightness);
-      mTmiInterface.stopCondition();
-
       // Set addressing mode.
       mTmiInterface.startCondition();
-      mTmiInterface.sendByte(addressMode);
+      mTmiInterface.write(addressMode);
       mTmiInterface.stopCondition();
 
       // Send data bytes.
       mTmiInterface.startCondition();
-      mTmiInterface.sendByte(otherCommand);
+      mTmiInterface.write(otherCommand);
       [...]
+      mTmiInterface.stopCondition();
+
+      // Set brightness.
+      mTmiInterface.startCondition();
+      mTmiInterface.write(brightness);
       mTmiInterface.stopCondition();
     }
 
@@ -269,12 +264,12 @@ class SimpleTmiFastInterface {
   public:
     explicit SimpleTmiFastInterface() = default;
 
-    void begin() {...}
-    void end() {...}
+    void begin() const;
+    void end() const;
 
-    void startCondition() {...}
-    void stopCondition() {...}
-    uint8_t sendByte(uint8_t data) {...}
+    void startCondition() const;
+    void stopCondition() const;
+    uint8_t write(uint8_t data) const;
 };
 ```
 
