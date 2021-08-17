@@ -1,5 +1,7 @@
 # AceTMI
 
+[![Validation](https://github.com/bxparks/AceTMI/actions/workflows/validation.yml/badge.svg)](https://github.com/bxparks/AceTMI/actions/workflows/validation.yml)
+
 Unified interface for communicating with a TM1637 LED controller chip on Arduino
 platforms. The code was initially part of the
 [AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
