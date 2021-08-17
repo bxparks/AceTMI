@@ -1,6 +1,7 @@
 # Changelog
 
 * Unreleased
+* 0.3 (2021-08-17)
     * Rename `sendByte()` to `write()` for consistency with the API of `AceWire`
       and `TwoWire`, since the TM1637 protocol is very similar to I2C.
         * Also avoids confusion with the `send8()` and `send16()` methods of

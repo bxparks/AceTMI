@@ -1,12 +1,7 @@
 # AceTMI
 
-Unified interface for selecting different implementations for communicating
-with a TM1637 LED controller chip on Arduino platforms. Uses C++ templates to
-achieve minimal or zero-cost runtime overhead for the abstraction.  In more
-technical terms, the library provides compile-time polymorphism instead of
-runtime polymorphism to avoid the overhead of the `virtual` keyword.
-
-The code was initially part of the
+Unified interface for communicating with a TM1637 LED controller chip on Arduino
+platforms. The code was initially part of the
 [AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
 into a separate library for consistency with the
 [AceWire](https://github.com/bxparks/AceWire) and
@@ -29,7 +24,11 @@ as I know. Most people will want to use the `Tm1637Module` class in the
 [AceSegment](https://github.com/bxparks/AceSegment) library instead of using
 this lower-level library.
 
-**Version**: 0.2 (2021-07-30)
+The library uses C++ templates to achieve minimal runtime overhead. In more
+technical terms, the library provides compile-time polymorphism instead of
+runtime polymorphism to avoid the overhead of the `virtual` keyword.
+
+**Version**: 0.3 (2021-08-17)
 
 **Changelog**: [CHANGELOG.md](CHANGELOG.md)
 
@@ -89,7 +88,7 @@ The source files are organized as follows:
 The main `AceTMI.h` does not depend any external libraries.
 
 The "Fast" version (`SimpleTmiFastInterface.h`)
-depend on one of the digitalWriteFast libraries, for example:
+depends on one of the digitalWriteFast libraries, for example:
 
 * https://github.com/watterott/Arduino-Libs/tree/master/digitalWriteFast
 * https://github.com/NicksonYap/digitalWriteFast
@@ -141,7 +140,7 @@ library. To use the "Fast" versions, use something like the following:'
 
 The classes in this library provide the following unified interface for handling
 communication with the TM1637 chip. Downstream classes can code against this
-unified interface using C++ templates so that different implementations can be
+generic API using C++ templates so that different implementations can be
 selected at compile-time.
 
 ```C++
