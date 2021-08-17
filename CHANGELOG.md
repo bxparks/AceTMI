@@ -1,6 +1,12 @@
 # Changelog
 
 * Unreleased
+    * Rename `sendByte()` to `write()` for consistency with the API of `AceWire`
+      and `TwoWire`, since the TM1637 protocol is very similar to I2C.
+        * Also avoids confusion with the `send8()` and `send16()` methods of
+          `AceSPI` which include the `beginTransaction()` and
+          `endTransaction()`.
+        * The `write()` methods do *not* include the start and stop conditions.
 * 0.2 (2021-07-30)
     * Add `examples/MemoryBenchmark` and `examples/AutoBenchmark` to calculate
       memory consumption and CPU speed.

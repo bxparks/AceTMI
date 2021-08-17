@@ -147,12 +147,12 @@ selected at compile-time.
 ```C++
 class XxxInterface {
   public:
-    void begin();
-    void end();
+    void begin() const;
+    void end() const;
 
-    void startCondition();
-    void stopCondition();
-    uint8_t sendByte(uint8_t data);
+    void startCondition() const;
+    void stopCondition() const;
+    uint8_t write(uint8_t data) const;
 };
 ```
 
@@ -179,18 +179,14 @@ class SimpleTmiInterface {
         uint8_t dioPin,
         uint8_t clkPin,
         uint8_t delayMicros
-    ) :
-        mDioPin(dioPin),
-        mClkPin(clkPin),
-        mDelayMicros(delayMicros)
-    {}
+    );
 
-    void begin() {...}
-    void end() {...}
+    void begin() const;
+    void end() const;
 
-    void startCondition() {...}
-    void stopCondition() {...}
-    uint8_t sendByte(uint8_t data) {...}
+    void startCondition() const;
+    void stopCondition() const;
+    uint8_t write(uint8_t data) const;
 };
 ```
 
@@ -209,20 +205,20 @@ class MyClass {
     {...}
 
     void sendData() {
-      // Set brightness.
-      mTmiInterface.startCondition();
-      mTmiInterface.sendByte(brightness);
-      mTmiInterface.stopCondition();
-
       // Set addressing mode.
       mTmiInterface.startCondition();
-      mTmiInterface.sendByte(addressMode);
+      mTmiInterface.write(addressMode);
       mTmiInterface.stopCondition();
 
       // Send data bytes.
       mTmiInterface.startCondition();
-      mTmiInterface.sendByte(otherCommand);
+      mTmiInterface.write(otherCommand);
       [...]
+      mTmiInterface.stopCondition();
+
+      // Set brightness.
+      mTmiInterface.startCondition();
+      mTmiInterface.write(brightness);
       mTmiInterface.stopCondition();
     }
 
@@ -269,12 +265,12 @@ class SimpleTmiFastInterface {
   public:
     explicit SimpleTmiFastInterface() = default;
 
-    void begin() {...}
-    void end() {...}
+    void begin() const;
+    void end() const;
 
-    void startCondition() {...}
-    void stopCondition() {...}
-    uint8_t sendByte(uint8_t data) {...}
+    void startCondition() const;
+    void stopCondition() const;
+    uint8_t write(uint8_t data) const;
 };
 ```
 

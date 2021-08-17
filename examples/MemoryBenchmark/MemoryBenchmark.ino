@@ -100,10 +100,10 @@ void loop() {
 #elif FEATURE == FEATURE_TMI \
     || FEATURE == FEATURE_TMI_FAST
   tmiInterface.startCondition();
-  tmiInterface.sendByte(0x11);
-  tmiInterface.sendByte(0x11);
-  tmiInterface.sendByte(0x11);
-  tmiInterface.sendByte(0x11);
+  tmiInterface.write(0x11);
+  tmiInterface.write(0x11);
+  tmiInterface.write(0x11);
+  tmiInterface.write(0x11);
   tmiInterface.stopCondition();
 
 #else
