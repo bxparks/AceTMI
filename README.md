@@ -10,10 +10,13 @@ into a separate library for consistency with the
 [AceSPI](https://github.com/bxparks/AceSPI) libraries. It provides the following
 implementations:
 
-* `SimpleTmiInterface.h`
+* `SimpleTmiInterface`
     * Implements the TM1637 protocol using `digitalWrite()`.
-* `SimpleTmiFastInterface.h`
+* `SimpleTmiFastInterface`
     * Implements the TM1637 protocol using `digitalWriteFast()`.
+    * Consumes 4X less flash memory than `SimpleTmiInterface` (182 bytes versus
+      744 bytes).
+    * Over 9X faster than `SimpleTmiInterface` (386 kbps versus 41 kbps).
 
 The "TMI" acronym was invented by this library to name the protocol used by the
 TM1637 chip. It stands for "Titan Micro Interface", named after Titan Micro
