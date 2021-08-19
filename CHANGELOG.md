@@ -8,6 +8,7 @@
           `AceSPI` which include the `beginTransaction()` and
           `endTransaction()`.
         * The `write()` methods do *not* include the start and stop conditions.
+    * First public release.
 * 0.2 (2021-07-30)
     * Add `examples/MemoryBenchmark` and `examples/AutoBenchmark` to calculate
       memory consumption and CPU speed.
