@@ -85,7 +85,7 @@ class SimpleTmiInterface {
     {}
 
     /**
-     * Initialize the dio and clk pins.
+     * Initialize the DIO and CLK pins.
      *
      * These are open-drain lines, with pull-up resistors. We must not drive
      * them HIGH actively since that could damage the transitor at the other
@@ -134,7 +134,9 @@ class SimpleTmiInterface {
      * does not seem to cause any problems with the LED modules that I have
      * tested.
      *
-     * @return 1 if device responded with ACK, 0 for NACK.
+     * @return 1 if device responded with ACK, 0 for NACK. (This retains
+     *    consistency with AceWire's I2C `write()` methods which return the
+     *    number of bytes transfered.)
      */
     uint8_t write(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
@@ -143,7 +145,10 @@ class SimpleTmiInterface {
         } else {
           dataLow();
         }
+
+        // Device reads DIO on the rising edge of CLK.
         clockHigh();
+
         // An extra bitDelay() here would make the HIGH and LOW states symmetric
         // in duration (if digitalWrite() is assumed to be infinitely fast,
         // which it is definitely not). But actual devices that I have tested

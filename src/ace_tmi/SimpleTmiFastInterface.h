@@ -44,7 +44,7 @@ namespace ace_tmi {
  * in MemoryBenchmark shows that using this `SimpleTmiFastInterface` instead of
  * `SimpleTmiInterface` saves 650-770 bytes of flash on an AVR processor.
  *
- * Word of caution: There is a use-case where the normal `SimpleTmiInterface`
+ * Caution: There might be a use-case where the normal `SimpleTmiInterface`
  * might consume less flash memory. If your application uses more than one
  * TM1637 LED Module, you will need to create multiple instances of the
  * `Tm1637Module`. But the pin numbers of this class must be a compile-time
@@ -53,7 +53,7 @@ namespace ace_tmi {
  * a template argument, each LED Module generate a new template instance of the
  * `Tm1637Module` class.
  *
- * When there are more than some number of TM1636 LED modules, it may actually
+ * When there are more than some number of TM1637 LED modules, it may actually
  * be more efficient to use the non-fast `SimpleTmiInterface`, because you will
  * generate only a single template instantiation. I have not currently done any
  * experiments to see where the break-even point would be.
@@ -77,7 +77,8 @@ class SimpleTmiFastInterface {
     /** Constructor. */
     explicit SimpleTmiFastInterface() = default;
 
-    /** Initialize the dio and clk pins.
+    /**
+     * Initialize the DIO and CLK pins.
      *
      * These are open-drain lines, with pull-up resistors. We must not drive
      * them HIGH actively since that could damage the transitor at the other
@@ -127,8 +128,8 @@ class SimpleTmiFastInterface {
      * tested.
      *
      * @return 1 if device responded with ACK, 0 for NACK. (This retains
-     *    consistency with AceWire's `write()` method which returns the number
-     *    of bytes transfered.)
+     *    consistency with AceWire's I2C `write()` methods which return the
+     *    number of bytes transfered.)
      */
     uint8_t write(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
@@ -137,7 +138,10 @@ class SimpleTmiFastInterface {
         } else {
           dataLow();
         }
+
+        // Device reads DIO on the rising edge of CLK.
         clockHigh();
+
         // An extra bitDelay() here would make the HIGH and LOW states symmetric
         // in duration (if digitalWriteFast() is assumed to be infinitely fast,
         // which it is definitely not). But actual devices that I have tested
