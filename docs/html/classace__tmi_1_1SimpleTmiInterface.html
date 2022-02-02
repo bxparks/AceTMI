@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.3</span>
+   &#160;<span id="projectnumber">0.4</span>
    </div>
-   <div id="projectbrief">Unified interface for selecting different implementations for communicating with a TM1637 LED controller chip on Arduino platforms</div>
+   <div id="projectbrief">Interfaces for communicating with the TM1637 and TM1638 LED controllers on Arduino platforms</div>
   </td>
  </tr>
  </tbody>
@@ -86,7 +86,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8082581169f1434f614bc359c1423297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classace__tmi_1_1SimpleTmiInterface.html#a8082581169f1434f614bc359c1423297">More...</a><br /></td></tr>
 <tr class="separator:a8082581169f1434f614bc359c1423297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a258ea205516c6b9d750c0e051975dbed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a258ea205516c6b9d750c0e051975dbed">begin</a> () const</td></tr>
-<tr class="memdesc:a258ea205516c6b9d750c0e051975dbed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the dio and clk pins.  <a href="classace__tmi_1_1SimpleTmiInterface.html#a258ea205516c6b9d750c0e051975dbed">More...</a><br /></td></tr>
+<tr class="memdesc:a258ea205516c6b9d750c0e051975dbed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the DIO and CLK pins.  <a href="classace__tmi_1_1SimpleTmiInterface.html#a258ea205516c6b9d750c0e051975dbed">More...</a><br /></td></tr>
 <tr class="separator:a258ea205516c6b9d750c0e051975dbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af245b573d7ae197d980b870951078cfb"><td class="memItemLeft" align="right" valign="top"><a id="af245b573d7ae197d980b870951078cfb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#af245b573d7ae197d980b870951078cfb">end</a> () const</td></tr>
@@ -208,7 +208,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 </div><div class="memdoc">
 
-<p>Initialize the dio and clk pins. </p>
+<p>Initialize the DIO and CLK pins. </p>
 <p>These are open-drain lines, with pull-up resistors. We must not drive them HIGH actively since that could damage the transitor at the other end of the line pulling LOW. Instead, we go into INPUT mode to let the line to HIGH through the pullup resistor, then go to OUTPUT mode only to pull down. </p>
 
 <p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00096">96</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
@@ -241,9 +241,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C. </p>
 <p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
-<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. (This retains consistency with AceWire's I2C <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e" title="Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.">write()</a></code> methods which return the number of bytes transfered.) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00139">139</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00141">141</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
 
 </div>
 </div>
