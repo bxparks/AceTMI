@@ -60,6 +60,8 @@ runtime polymorphism to avoid the overhead of the `virtual` keyword.
     * [Unified Interface](#UnifiedInterface)
     * [SimpleTmiInterface](#SimpleTmiInterface)
     * [SimpleTmiFastInterface](#SimpleTmiFastInterface)
+    * [SimpleTmi1638Interface](#SimpleTmi1638Interface)
+    * [SimpleTmi1638FastInterface](#SimpleTmi1638FastInterface)
     * [Storing Interface Objects](#StoringInterfaceObjects)
 * [Resource Consumption](#ResourceConsumption)
     * [Flash And Static Memory](#FlashAndStaticMemory)
@@ -114,6 +116,7 @@ depends on one of the digitalWriteFast libraries, for example:
 * Examples:
     * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1637Demo
     * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1637DualDemo
+    * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1638Demo
 
 <a name="Usage"></a>
 ## Usage
