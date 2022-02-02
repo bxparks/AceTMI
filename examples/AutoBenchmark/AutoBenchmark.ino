@@ -35,6 +35,7 @@ SOFTWARE.
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
 #include <digitalWriteFast.h>
 #include <ace_tmi/SimpleTmiFastInterface.h>
+#include <ace_tmi/SimpleTmi1638FastInterface.h>
 #endif
 
 using namespace ace_tmi;
@@ -55,6 +56,7 @@ using ace_common::TimingStats;
 const uint8_t BIT_DELAY = 1;
 const uint8_t CLK_PIN = SCL;
 const uint8_t DIO_PIN = SDA;
+const uint8_t STB_PIN = 10;
 
 //-----------------------------------------------------------------------------
 // Timing stats.
@@ -108,6 +110,32 @@ void runBenchmark(
   printStats(name, timingStats, numSamples);
 }
 
+template <typename T_TMII>
+void runBenchmark1638(
+    const __FlashStringHelper* name,
+    T_TMII& tmiInterface) {
+
+  const uint16_t numSamples = 20;
+
+  timingStats.reset();
+  for (uint16_t i = 0; i < numSamples; ++i) {
+    uint16_t startMicros = micros();
+    tmiInterface.beginTransaction();
+    // Send 4 bytes, approximating a 4-digit TM1637 LED module.
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x22);
+    tmiInterface.write(0x33);
+    tmiInterface.write(0x44);
+    tmiInterface.endTransaction();
+    uint16_t endMicros = micros();
+
+    timingStats.update(endMicros - startMicros);
+    yield();
+  }
+
+  printStats(name, timingStats, numSamples);
+}
+
 void runSimpleTmi() {
   using TmiInterface = SimpleTmiInterface;
   TmiInterface tmiInterface(DIO_PIN, CLK_PIN, BIT_DELAY);
@@ -126,6 +154,25 @@ void runSimpleTmiFast() {
 }
 #endif
 
+void runSimpleTmi1638() {
+  using TmiInterface = SimpleTmi1638Interface;
+  TmiInterface tmiInterface(DIO_PIN, CLK_PIN, STB_PIN, BIT_DELAY);
+  tmiInterface.begin();
+  runBenchmark1638(F("SimpleTmi1638Interface,1us"), tmiInterface);
+  tmiInterface.end();
+}
+
+#if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
+void runSimpleTmi1638Fast() {
+  using TmiInterface = SimpleTmi1638FastInterface<
+      DIO_PIN, CLK_PIN, STB_PIN, BIT_DELAY>;
+  TmiInterface tmiInterface;
+  tmiInterface.begin();
+  runBenchmark1638(F("SimpleTmi1638FastInterface,1us"), tmiInterface);
+  tmiInterface.end();
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // runBenchmarks()
 //-----------------------------------------------------------------------------
@@ -134,6 +181,11 @@ void runBenchmarks() {
   runSimpleTmi();
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
   runSimpleTmiFast();
+#endif
+
+  runSimpleTmi1638();
+#if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
+  runSimpleTmi1638Fast();
 #endif
 }
 
@@ -148,6 +200,15 @@ void printSizeOf() {
 #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
   SERIAL_PORT_MONITOR.print(F("sizeof(SimpleTmiFastInterface<4, 5, 100>): "));
   SERIAL_PORT_MONITOR.println(sizeof(SimpleTmiFastInterface<4, 5, 100>));
+#endif
+
+  SERIAL_PORT_MONITOR.print(F("sizeof(SimpleTmi1638Interface): "));
+  SERIAL_PORT_MONITOR.println(sizeof(SimpleTmi1638Interface));
+
+#if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
+  SERIAL_PORT_MONITOR.print(
+      F("sizeof(SimpleTmi1638FastInterface<4, 5, 6, 1>): "));
+  SERIAL_PORT_MONITOR.println(sizeof(SimpleTmi1638FastInterface<4, 5, 6, 1>));
 #endif
 }
 

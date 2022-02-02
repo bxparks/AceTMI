@@ -78,21 +78,25 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 ### Arduino Nano
 
 * 16MHz ATmega328P
-* Arduino IDE 1.8.13
-* Arduino AVR Boards 1.8.3
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* Arduino AVR Boards 1.8.4
 * `micros()` has a resolution of 4 microseconds
 
 ```
 Sizes of Objects:
 sizeof(SimpleTmiInterface): 3
 sizeof(SimpleTmiFastInterface<4, 5, 100>): 1
+sizeof(SimpleTmi1638Interface): 4
+sizeof(SimpleTmi1638FastInterface<4, 5, 6, 1>): 1
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
 | SimpleTmiInterface,1us                  |   752/  781/  836 |     41.0 |
-| SimpleTmiFastInterface,1us              |    76/   83/   84 |    385.5 |
+| SimpleTmiFastInterface,1us              |    92/   95/  104 |    336.8 |
+| SimpleTmi1638Interface,1us              |   616/  635/  688 |     50.4 |
+| SimpleTmi1638FastInterface,1us          |    84/   86/   92 |    372.1 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -100,7 +104,7 @@ CPU:
 ### SparkFun Pro Micro
 
 * 16 MHz ATmega32U4
-* Arduino IDE 1.8.13
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
 * SparkFun AVR Boards 1.1.13
 * `micros()` has a resolution of 4 microseconds
 
@@ -108,32 +112,17 @@ CPU:
 Sizes of Objects:
 sizeof(SimpleTmiInterface): 3
 sizeof(SimpleTmiFastInterface<4, 5, 100>): 1
+sizeof(SimpleTmi1638Interface): 4
+sizeof(SimpleTmi1638FastInterface<4, 5, 6, 1>): 1
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   752/  761/  768 |     42.0 |
-| SimpleTmiFastInterface,1us              |    76/   77/   88 |    415.6 |
-+-----------------------------------------+-------------------+----------+
-
-```
-
-### SAMD21 M0 Mini
-
-* 48 MHz ARM Cortex-M0+
-* Arduino IDE 1.8.13
-* Sparkfun SAMD Core 1.8.3
-
-```
-Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
-
-CPU:
-+-----------------------------------------+-------------------+----------+
-| Functionality                           |   min/  avg/  max | eff kbps |
-|-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   616/  619/  622 |     51.7 |
+| SimpleTmiInterface,1us                  |   756/  761/  764 |     42.0 |
+| SimpleTmiFastInterface,1us              |    84/   88/   96 |    363.6 |
+| SimpleTmi1638Interface,1us              |   756/  764/  768 |     41.9 |
+| SimpleTmi1638FastInterface,1us          |    76/   79/   88 |    405.1 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -141,18 +130,20 @@ CPU:
 ### STM32
 
 * STM32 "Blue Pill", STM32F103C8, 72 MHz ARM Cortex-M3
-* Arduino IDE 1.8.13
-* STM32duino 2.0.0
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* STM32duino 2.2.0
 
 ```
 Sizes of Objects:
 sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   874/  878/  887 |     36.4 |
+| SimpleTmiInterface,1us                  |   877/  882/  910 |     36.3 |
+| SimpleTmi1638Interface,1us              |   433/  435/  438 |     73.6 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -160,18 +151,20 @@ CPU:
 ### ESP8266
 
 * NodeMCU 1.0 clone, 80MHz ESP8266
-* Arduino IDE 1.8.13
-* ESP8266 Boards 2.7.4
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* ESP8266 Boards 3.0.2
 
 ```
 Sizes of Objects:
 sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   392/  395/  433 |     81.0 |
+| SimpleTmiInterface,1us                  |   375/  377/  415 |     84.9 |
+| SimpleTmi1638Interface,1us              |   334/  335/  354 |     95.5 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -179,18 +172,20 @@ CPU:
 ### ESP32
 
 * ESP32-01 Dev Board, 240 MHz Tensilica LX6
-* Arduino IDE 1.8.13
-* ESP32 Boards 1.0.6
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* ESP32 Boards 2.0.2
 
 ```
 Sizes of Objects:
 sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   239/  242/  248 |    132.2 |
+| SimpleTmiInterface,1us                  |   230/  231/  238 |    138.5 |
+| SimpleTmi1638Interface,1us              |   171/  173/  180 |    185.0 |
 +-----------------------------------------+-------------------+----------+
 
 ```
@@ -198,19 +193,21 @@ CPU:
 ### Teensy 3.2
 
 * 96 MHz ARM Cortex-M4
-* Arduino IDE 1.8.13
-* Teensyduino 1.53
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* Teensyduino 1.56
 * Compiler options: "Faster"
 
 ```
 Sizes of Objects:
 sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   167/  167/  170 |    191.6 |
+| SimpleTmiInterface,1us                  |   177/  177/  181 |    180.8 |
+| SimpleTmi1638Interface,1us              |   151/  151/  154 |    211.9 |
 +-----------------------------------------+-------------------+----------+
 
 ```

@@ -10,8 +10,6 @@ nano_results = check_output(
     "./generate_table.awk < nano.txt", shell=True, text=True)
 micro_results = check_output(
     "./generate_table.awk < micro.txt", shell=True, text=True)
-samd_results = check_output(
-    "./generate_table.awk < samd.txt", shell=True, text=True)
 stm32_results = check_output(
     "./generate_table.awk < stm32.txt", shell=True, text=True)
 esp8266_results = check_output(
@@ -92,18 +90,20 @@ The following tables show the number of microseconds taken by:
 
 * `SimpleTmiInterface`
 * `SimpleTmiFastInterface`
+* `SimpleTmi1638Interface`
+* `SimpleTmi1638FastInterface`
 
 On AVR processors, the "fast" options are available using one of the
 digitalWriteFast libraries whose `digitalWriteFast()` functions can be up to 50X
 faster if the `pin` number and `value` parameters are compile-time constants. In
 addition, the `digitalWriteFast` functions reduce flash memory consumption by
-600-700 bytes compared to their non-fast equivalents.
+500-700 bytes compared to their non-fast equivalents.
 
 ### Arduino Nano
 
 * 16MHz ATmega328P
-* Arduino IDE 1.8.13
-* Arduino AVR Boards 1.8.3
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* Arduino AVR Boards 1.8.4
 * `micros()` has a resolution of 4 microseconds
 
 ```
@@ -113,7 +113,7 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 ### SparkFun Pro Micro
 
 * 16 MHz ATmega32U4
-* Arduino IDE 1.8.13
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
 * SparkFun AVR Boards 1.1.13
 * `micros()` has a resolution of 4 microseconds
 
@@ -121,21 +121,11 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 {micro_results}
 ```
 
-### SAMD21 M0 Mini
-
-* 48 MHz ARM Cortex-M0+
-* Arduino IDE 1.8.13
-* Sparkfun SAMD Core 1.8.3
-
-```
-{samd_results}
-```
-
 ### STM32
 
 * STM32 "Blue Pill", STM32F103C8, 72 MHz ARM Cortex-M3
-* Arduino IDE 1.8.13
-* STM32duino 2.0.0
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* STM32duino 2.2.0
 
 ```
 {stm32_results}
@@ -144,8 +134,8 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 ### ESP8266
 
 * NodeMCU 1.0 clone, 80MHz ESP8266
-* Arduino IDE 1.8.13
-* ESP8266 Boards 2.7.4
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* ESP8266 Boards 3.0.2
 
 ```
 {esp8266_results}
@@ -154,8 +144,8 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 ### ESP32
 
 * ESP32-01 Dev Board, 240 MHz Tensilica LX6
-* Arduino IDE 1.8.13
-* ESP32 Boards 1.0.6
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* ESP32 Boards 2.0.2
 
 ```
 {esp32_results}
@@ -164,8 +154,8 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 ### Teensy 3.2
 
 * 96 MHz ARM Cortex-M4
-* Arduino IDE 1.8.13
-* Teensyduino 1.53
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* Teensyduino 1.56
 * Compiler options: "Faster"
 
 ```
