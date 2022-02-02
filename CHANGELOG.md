@@ -1,6 +1,7 @@
 # Changelog
 
 * Unreleased
+* 0.5 (2022-02-02)
     * **Breaking Change**: Rename TM1637 classes for consistency with TM1638
       classes.
         * Rename `SimpleTmiInterface` to `SimpleTmi1637Interface`.

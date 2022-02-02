@@ -41,7 +41,7 @@ The library uses C++ templates to achieve minimal runtime overhead. In more
 technical terms, the library provides compile-time polymorphism instead of
 runtime polymorphism to avoid the overhead of the `virtual` keyword.
 
-**Version**: 0.4 (2022-02-01)
+**Version**: 0.5 (2022-02-02)
 
 **Changelog**: [CHANGELOG.md](CHANGELOG.md)
 
