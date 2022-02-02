@@ -2,8 +2,8 @@
 
 [![Validation](https://github.com/bxparks/AceTMI/actions/workflows/validation.yml/badge.svg)](https://github.com/bxparks/AceTMI/actions/workflows/validation.yml)
 
-Unified interface classes for communicating with a TM1637 or TM1638 LED
-controller chip on Arduino platforms. The code was initially part of the
+Interface classes for communicating with a TM1637 or TM1638 LED controller chip
+on Arduino platforms. The code was initially part of the
 [AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
 into a separate library for consistency with the
 [AceWire](https://github.com/bxparks/AceWire) and
