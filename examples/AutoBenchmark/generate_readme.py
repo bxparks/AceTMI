@@ -25,7 +25,7 @@ print(f"""\
 This program measures the performance of various implementations of the TM1637
 protocol in the AceTMI library: `SimpleTmiInterface` and `SimpleTmiFastInterface`.
 
-**Version**: AceTMI v0.3
+**Version**: AceTMI v0.4
 
 **DO NOT EDIT**: This file was auto-generated using `make README.md`.
 

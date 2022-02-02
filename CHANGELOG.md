@@ -1,6 +1,7 @@
 # Changelog
 
 * Unreleased
+* 0.4 (2022-02-01)
     * Add support for the TM1638 controller which uses an SPI-like protocol.
         * Add `SimpleTmi1638Interface` and `SimpleTmi1638FastInterface`.
     * Upgrade tool chain and regenerate `MemoryBenchmark` and `AutoBenchmark`.
