@@ -2,8 +2,8 @@
 
 [![Validation](https://github.com/bxparks/AceTMI/actions/workflows/validation.yml/badge.svg)](https://github.com/bxparks/AceTMI/actions/workflows/validation.yml)
 
-Unified interface for communicating with a TM1637 LED controller chip on Arduino
-platforms. The code was initially part of the
+Unified interface classes for communicating with a TM1637 or TM1638 LED
+controller chip on Arduino platforms. The code was initially part of the
 [AceSegment](https://github.com/bxparks/AceSegment) library, but was extracted
 into a separate library for consistency with the
 [AceWire](https://github.com/bxparks/AceWire) and
@@ -14,20 +14,28 @@ implementations:
     * Implements the TM1637 protocol using `digitalWrite()`.
 * `SimpleTmiFastInterface`
     * Implements the TM1637 protocol using `digitalWriteFast()`.
-    * Consumes 4X less flash memory than `SimpleTmiInterface` (182 bytes versus
-      744 bytes).
-    * Over 9X faster than `SimpleTmiInterface` (386 kbps versus 41 kbps).
+    * 4X less flash memory than `SimpleTmiInterface` (182 bytes versus
+      820 bytes).
+    * 9X faster than `SimpleTmiInterface` (363 kbps versus 42 kbps).
+* `SimpleTmi1638Interface`
+    * Implements the TM1638 protocol using `digitalWrite()`.
+* `SimpleTmi1638FastInterface`
+    * Implements the TM1638 protocol using `digitalWriteFast()`.
+    * 5X less flash memory than `SimpleTmi1638Interface` (102 bytes
+      versus 584 bytes).
+    * 10X faster than `SimpleTmi1638Interface` (405 kbps versus 42 kbps).
 
 The "TMI" acronym was invented by this library to name the protocol used by the
-TM1637 chip. It stands for "Titan Micro Interface", named after Titan Micro
-Electronics which manufactures the TM1637 chip. The TM1637 protocol is
-electrically very similar to I2C, but different enough that we cannot use the
-`<Wire.h>` I2C library.
+TM1637 or the TM1638 chip. It stands for "Titan Micro Interface", named after
+Titan Micro Electronics which manufactures these chips. The TM1637 protocol is
+electrically similar to I2C, but different enough that we cannot use the
+`<Wire.h>` I2C library. The TM1638 protocol is electrically similar to SPI but
+different enough that we cannot use the `<SPI.h>` library.
 
-The protocol implemented by this library works only for the TM1637 chip as far
-as I know. Most people will want to use the `Tm1637Module` class in the
-[AceSegment](https://github.com/bxparks/AceSegment) library instead of using
-this lower-level library.
+The protocol implemented by this library works only for the TM1637 or the TM1638
+chips as far as I know. Most people will want to use the `Tm1637Module` or the
+`Tm1638Module` class in the [AceSegment](https://github.com/bxparks/AceSegment)
+library instead of using this low-level library.
 
 The library uses C++ templates to achieve minimal runtime overhead. In more
 technical terms, the library provides compile-time polymorphism instead of
@@ -155,6 +163,20 @@ class XxxInterface {
 
     void startCondition() const;
     void stopCondition() const;
+    uint8_t write(uint8_t data) const;
+};
+```
+
+The TM1638 interface classes follow a similar pattern:
+
+```C++
+class Xxx1638Interface {
+  public:
+    void begin() const;
+    void end() const;
+
+    void beginTransaction() const;
+    void endTransaction() const;
     uint8_t write(uint8_t data) const;
 };
 ```
@@ -307,6 +329,149 @@ void setup() {
 }
 ```
 
+<a name="SimpleTmi1638Interface"></a>
+### SimpleTmi1638Interface
+
+The `SimpleTmi1638Interface` can be used like this to communicate with a TM1637
+controller chip. It looks like this:
+
+```C++
+class SimpleTmi1638Interface {
+  public:
+    explicit SimpleTmi1638Interface(
+        uint8_t dioPin,
+        uint8_t clkPin,
+        uint8_t stbPin,
+        uint8_t delayMicros
+    );
+
+    void begin() const;
+    void end() const;
+
+    void beginTransaction() const;
+    void endTransaction() const;
+    uint8_t write(uint8_t data) const;
+};
+```
+
+It is configured and used by the calling code `MyClass` like this:
+
+```C++
+#include <Arduino.h>
+#include <AceTMI.h>
+using ace_tmi::SimpleTmi1638Interface;
+
+template <typename T_TMII>
+class MyClass {
+  public:
+    explicit MyClass(T_TMII& tmiInterface)
+        : mTmiInterface(tmiInterface)
+    {...}
+
+    void sendData() {
+      // Set addressing mode.
+      mTmiInterface.beginTransaction();
+      mTmiInterface.write(dataCommand);
+      mTmiInterface.endTransaction();
+
+      // Send data bytes.
+      mTmiInterface.beginTransaction();
+      mTmiInterface.write(addressCommand);
+      [...]
+      mTmiInterface.endTransaction();
+
+      // Set brightness.
+      mTmiInterface.beginTransaction();
+      mTmiInterface.write(brightness);
+      mTmiInterface.endTransaction();
+    }
+
+  private:
+    T_TMII mTmiInterface; // copied by value
+};
+
+const uint8_t CLK_PIN = 8;
+const uint8_t DIO_PIN = 9;
+const uint8_t STB_PIN = 10;
+const uint8_t DELAY_MICROS = 1;
+
+using TmiInterface = SimpleTmi1638Interface;
+TmiInterface tmiInterface(DIO_PIN, CLK_PIN, STB_PIN, DELAY_MICROS);
+MyClass<TmiInterface> myClass(tmiInterface);
+
+void setup() {
+  tmiInterface.begin();
+  ...
+}
+```
+
+The `using` statement is the C++11 version of a `typedef` that defines
+`TmiInterface`. It is not strictly necessary here, but it allows the same
+pattern to be used for the more complicated examples below.
+
+The `T_TMII` template parameter contains a `T_` prefix to avoid name collisions
+with too many `#define` macros defined in the global namespace on Arduino
+platforms. The double `II` contains 2 `Interface`, the first referring to the
+TM1637 protocol, and the second referring to classes in this library.
+
+<a name="SimpleTmi1638FastInterface"></a>
+### SimpleTmi1638FastInterface
+
+The `SimpleTmi1638FastInterface` is identical to `SimpleTmi1638Interface` except
+that it uses `digitalWriteFast()`. It looks like this:
+
+```C++
+template <
+    uint8_t T_DIO_PIN,
+    uint8_t T_CLK_PIN,
+    uint8_t T_STB_PIN,
+    uint8_t T_DELAY_MICROS
+>
+class SimpleTmi1638FastInterface {
+  public:
+    explicit SimpleTmi1638FastInterface() = default;
+
+    void begin() const;
+    void end() const;
+
+    void beginTransaction() const;
+    void endTransaction() const;
+    uint8_t write(uint8_t data) const;
+};
+```
+
+It is configured and used by the calling code `MyClass` like this:
+
+```C++
+#include <Arduino.h>
+#include <AceTMI.h>
+#if defined(ARDUINO_ARCH_AVR)
+  #include <digitalWriteFast.h>
+  #include <ace_tmi/SimpleTmi1638FastInterface.h>
+  using ace_tmi::SimpleTmi1638Interface;
+#endif
+
+const uint8_t CLK_PIN = 8;
+const uint8_t DIO_PIN = 9;
+const uint8_t STB_PIN = 10;
+const uint8_t DELAY_MICROS = 1;
+
+template <typename T_TMII>
+class MyClass {
+  // Exactly same as above.
+};
+
+using TmiInterface = SimpleTmi1638FastInterface<
+    DIO_PIN, CLK_PIN, STB_PIN, DELAY_MICROS>;
+TmiInterface tmiInterface;
+MyClass<TmiInterface> myClass(tmiInterface);
+
+void setup() {
+  tmiInterface.begin();
+  ...
+}
+```
+
 <a name="StoringInterfaceObjects"></a>
 ### Storing Interface Objects
 
@@ -333,10 +498,10 @@ class MyClass {
 };
 ```
 
-The internal size of the `SimpleTmiInterface` object is just 3 bytes, and the size
-of the `SimpleTmiFastInterface` is even smaller at 0 bytes, so we do not save much
-memory by storing these by reference. But storing the `mTmiInterface` as a
-reference causes an unnecessary extra layer of indirection every time the
+The internal size of the `SimpleTmiInterface` object is just 3 bytes, and the
+size of the `SimpleTmiFastInterface` is even smaller at 0 bytes, so we do not
+save much memory by storing these by reference. But storing the `mTmiInterface`
+as a reference causes an unnecessary extra layer of indirection every time the
 `mTmiInterface` object is called. In almost every case, I recommend storing the
 `XxxInterface` object **by value** into the `MyClass` object.
 
@@ -359,6 +524,8 @@ The Memory benchmark numbers can be seen in
 |---------------------------------+--------------+-------------|
 | SimpleTmiInterface              |   1200/   14 |   744/    3 |
 | SimpleTmiFastInterface          |    638/   11 |   182/    0 |
+| SimpleTmi1638Interface          |   1108/   15 |   652/    4 |
+| SimpleTmi1638FastInterface      |    590/   11 |   134/    0 |
 +--------------------------------------------------------------+
 ```
 
@@ -368,9 +535,10 @@ The Memory benchmark numbers can be seen in
 +--------------------------------------------------------------+
 | functionality                   |  flash/  ram |       delta |
 |---------------------------------+--------------+-------------|
-| baseline                        | 256700/26784 |     0/    0 |
+| baseline                        | 260089/27892 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              | 257588/26796 |   888/   12 |
+| SimpleTmiInterface              | 261361/27992 |  1272/  100 |
+| SimpleTmi1638Interface          | 261217/27992 |  1128/  100 |
 +--------------------------------------------------------------+
 ```
 
@@ -387,7 +555,9 @@ The CPU benchmark numbers can be seen in
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
 | SimpleTmiInterface,1us                  |   752/  781/  836 |     41.0 |
-| SimpleTmiFastInterface,1us              |    76/   83/   84 |    385.5 |
+| SimpleTmiFastInterface,1us              |    92/   95/  104 |    336.8 |
+| SimpleTmi1638Interface,1us              |   616/  635/  688 |     50.4 |
+| SimpleTmi1638FastInterface,1us          |    84/   86/   92 |    372.1 |
 +-----------------------------------------+-------------------+----------+
 ```
 
@@ -397,7 +567,8 @@ The CPU benchmark numbers can be seen in
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   392/  395/  433 |     81.0 |
+| SimpleTmiInterface,1us                  |   375/  377/  415 |     84.9 |
+| SimpleTmi1638Interface,1us              |   334/  335/  354 |     95.5 |
 +-----------------------------------------+-------------------+----------+
 ```
 
@@ -407,7 +578,9 @@ The CPU benchmark numbers can be seen in
 <a name="Hardware"></a>
 ### Hardware
 
-This library has Tier 1 support on the following boards:
+**Tier 1: Fully Supported**
+
+These boards are tested on each release:
 
 * Arduino Nano (16 MHz ATmega328P)
 * SparkFun Pro Micro (16 MHz ATmega32U4)
@@ -418,15 +591,31 @@ This library has Tier 1 support on the following boards:
 * ESP32 dev board (ESP-WROOM-32 module, 240 MHz dual core Tensilica LX6)
 * Teensy 3.2 (72 MHz ARM Cortex-M4)
 
-Tier 2 support can be expected on the following boards, mostly because I don't
-test these as often:
+**Tier 2: Should work**
+
+These boards should work but I don't test them as often:
 
 * ATtiny85 (8 MHz ATtiny85)
 * Arduino Pro Mini (16 MHz ATmega328P)
-* Teensy LC (48 MHz ARM Cortex-M0+)
 * Mini Mega 2560 (Arduino Mega 2560 compatible, 16 MHz ATmega2560)
+* Teensy LC (48 MHz ARM Cortex-M0+)
 
-The following boards are **not** supported:
+**Tier 3: May work, but not supported**
+
+* SAMD21 M0 Mini (48 MHz ARM Cortex-M0+)
+    * Arduino-branded SAMD21 boards use the ArduinoCore-API, so are explicitly
+      blacklisted. See below.
+    * Other 3rd party SAMD21 boards *may* work using the SparkFun SAMD core.
+    * However, as of SparkFun SAMD Core v1.8.6 and Arduino IDE 1.8.19, I can no
+      longer upload binaries to these 3rd party boards due to errors.
+    * Therefore, third party SAMD21 boards are now in this new Tier 3 category.
+    * This library may work on these boards, but I can no longer support them.
+
+**Tier Blacklisted**
+
+The following boards are *not* supported and are explicitly blacklisted to allow
+the compiler to print useful error messages instead of hundreds of lines of
+compiler errors:
 
 * Any platform using the ArduinoCore-API
   (https://github.com/arduino/ArduinoCore-api). For example:
@@ -437,17 +626,32 @@ The following boards are **not** supported:
 <a name="ToolChain"></a>
 ### Tool Chain
 
-* [Arduino IDE 1.8.13](https://www.arduino.cc/en/Main/Software)
-* [Arduino CLI 0.14.0](https://arduino.github.io/arduino-cli)
+* [Arduino IDE 1.8.19](https://www.arduino.cc/en/Main/Software)
+* [Arduino CLI 0.19.2](https://arduino.github.io/arduino-cli)
 * [SpenceKonde ATTinyCore 1.5.2](https://github.com/SpenceKonde/ATTinyCore)
-* [Arduino AVR Boards 1.8.3](https://github.com/arduino/ArduinoCore-avr)
+* [Arduino AVR Boards 1.8.4](https://github.com/arduino/ArduinoCore-avr)
 * [Arduino SAMD Boards 1.8.9](https://github.com/arduino/ArduinoCore-samd)
 * [SparkFun AVR Boards 1.1.13](https://github.com/sparkfun/Arduino_Boards)
-* [SparkFun SAMD Boards 1.8.3](https://github.com/sparkfun/Arduino_Boards)
-* [STM32duino 2.0.0](https://github.com/stm32duino/Arduino_Core_STM32)
-* [ESP8266 Arduino 2.7.4](https://github.com/esp8266/Arduino)
-* [ESP32 Arduino 1.0.6](https://github.com/espressif/arduino-esp32)
-* [Teensyduino 1.53](https://www.pjrc.com/teensy/td_download.html)
+* [SparkFun SAMD Boards 1.8.6](https://github.com/sparkfun/Arduino_Boards)
+* [STM32duino 2.2.0](https://github.com/stm32duino/Arduino_Core_STM32)
+* [ESP8266 Arduino 3.0.2](https://github.com/esp8266/Arduino)
+* [ESP32 Arduino 2.0.2](https://github.com/espressif/arduino-esp32)
+* [Teensyduino 1.56](https://www.pjrc.com/teensy/td_download.html)
+
+This library is *not* compatible with:
+
+* Any platform using the
+  [ArduinoCore-API](https://github.com/arduino/ArduinoCore-api), for example:
+    * [Arduino megaAVR](https://github.com/arduino/ArduinoCore-megaavr/)
+    * [MegaCoreX](https://github.com/MCUdude/MegaCoreX)
+    * [Arduino SAMD Boards >=1.8.10](https://github.com/arduino/ArduinoCore-samd)
+
+It should work with [PlatformIO](https://platformio.org/) but I have
+not tested it.
+
+The library can be compiled under Linux or MacOS (using both g++ and clang++
+compilers) using the EpoxyDuino (https://github.com/bxparks/EpoxyDuino)
+emulation layer.
 
 <a name="OperatingSystem"></a>
 ### Operating System
