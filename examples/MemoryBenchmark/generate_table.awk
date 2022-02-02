@@ -9,6 +9,8 @@ BEGIN {
   labels[0] = "baseline"
   labels[1] = "SimpleTmiInterface";
   labels[2] = "SimpleTmiFastInterface";
+  labels[3] = "SimpleTmi1638Interface";
+  labels[4] = "SimpleTmi1638FastInterface";
   record_index = 0
 }
 {

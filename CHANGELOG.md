@@ -1,6 +1,16 @@
 # Changelog
 
 * Unreleased
+    * Add support for the TM1638 controller which uses an SPI-like protocol.
+        * Add `SimpleTmi1638Interface` and `SimpleTmi1638FastInterface`.
+    * Upgrade tool chain and regenerate `MemoryBenchmark` and `AutoBenchmark`.
+        * Arduino IDE from 1.8.13 to 1.8.19
+        * Arduino CLI from 0.14.0 to 0.19.2
+        * Arduino AVR Core from 1.8.3 to 1.8.4
+        * STM32duino from 2.0.0 to 2.2.0
+        * ESP8266 Core from 2.7.4 to 3.0.2
+        * ESP32 Core from 1.0.6 to 2.0.2
+        * Teensyduino from 1.53 to 1.56
 * 0.3 (2021-08-17)
     * Rename `sendByte()` to `write()` for consistency with the API of `AceWire`
       and `TwoWire`, since the TM1637 protocol is very similar to I2C.
