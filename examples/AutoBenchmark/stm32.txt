@@ -1,7 +1,7 @@
 SIZEOF
-sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1637Interface): 3
 sizeof(SimpleTmi1638Interface): 4
 BENCHMARKS
-SimpleTmiInterface,1us 877 882 910 20
+SimpleTmi1637Interface,1us 877 882 910 20
 SimpleTmi1638Interface,1us 433 435 438 20
 END

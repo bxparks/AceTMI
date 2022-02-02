@@ -90,8 +90,8 @@ $ make README.md
 The following shows the flash and static memory sizes of the `MemoryBenchmark`
 program for various `LedModule` configurations and various Writer classes.
 
-* `SimpleTmiInterface`: implementation using `digitalWrite()`
-* `SimpleTmiFastInterface`: implementation using `digitalWriteFast()`
+* `SimpleTmi1637Interface`: implementation using `digitalWrite()`
+* `SimpleTmi1637FastInterface`: implementation using `digitalWriteFast()`
 
 ### ATtiny85
 

@@ -10,13 +10,13 @@ into a separate library for consistency with the
 [AceSPI](https://github.com/bxparks/AceSPI) libraries. It provides the following
 implementations:
 
-* `SimpleTmiInterface`
+* `SimpleTmi1637Interface`
     * Implements the TM1637 protocol using `digitalWrite()`.
-* `SimpleTmiFastInterface`
+* `SimpleTmi1637FastInterface`
     * Implements the TM1637 protocol using `digitalWriteFast()`.
-    * 4X less flash memory than `SimpleTmiInterface` (182 bytes versus
+    * 4X less flash memory than `SimpleTmi1637Interface` (182 bytes versus
       820 bytes).
-    * 9X faster than `SimpleTmiInterface` (363 kbps versus 42 kbps).
+    * 9X faster than `SimpleTmi1637Interface` (363 kbps versus 42 kbps).
 * `SimpleTmi1638Interface`
     * Implements the TM1638 protocol using `digitalWrite()`.
 * `SimpleTmi1638FastInterface`
@@ -58,8 +58,8 @@ runtime polymorphism to avoid the overhead of the `virtual` keyword.
 * [Usage](#Usage)
     * [Include Header and Namespace](#HeaderAndNamespace)
     * [Unified Interface](#UnifiedInterface)
-    * [SimpleTmiInterface](#SimpleTmiInterface)
-    * [SimpleTmiFastInterface](#SimpleTmiFastInterface)
+    * [SimpleTmi1637Interface](#SimpleTmi1637Interface)
+    * [SimpleTmi1637FastInterface](#SimpleTmi1637FastInterface)
     * [SimpleTmi1638Interface](#SimpleTmi1638Interface)
     * [SimpleTmi1638FastInterface](#SimpleTmi1638FastInterface)
     * [Storing Interface Objects](#StoringInterfaceObjects)
@@ -101,7 +101,7 @@ The source files are organized as follows:
 
 The main `AceTMI.h` does not depend any external libraries.
 
-The "Fast" version (`SimpleTmiFastInterface.h`)
+The "Fast" version (`SimpleTmi1637FastInterface.h`)
 depends on one of the digitalWriteFast libraries, for example:
 
 * https://github.com/watterott/Arduino-Libs/tree/master/digitalWriteFast
@@ -132,7 +132,7 @@ prepending the `ace_tmi::` prefix, use the `using` directive:
 ```C++
 #include <Arduino.h>
 #include <AceTMI.h>
-using ace_tmi::SimpleTmiInterface;
+using ace_tmi::SimpleTmi1637Interface;
 ```
 
 The "Fast" versions are not included automatically by `AceTMI.h` because they
@@ -145,8 +145,8 @@ library. To use the "Fast" versions, use something like the following:'
 
 #if defined(ARDUINO_ARCH_AVR)
   #include <digitalWriteFast.h>
-  #include <ace_tmi/SimpleTmiFastInterface.h>
-  using ace_tmi::SimpleTmiFastInterface;
+  #include <ace_tmi/SimpleTmi1637FastInterface.h>
+  using ace_tmi::SimpleTmi1637FastInterface;
 #endif
 ```
 
@@ -194,16 +194,16 @@ the digitalWriteFast libraries which use compile-time constants for pin numbers.
 The disadvantage is that this library is harder to use because these classes
 require the downstream classes to be implemented using C++ templates.
 
-<a name="SimpleTmiInterface"></a>
-### SimpleTmiInterface
+<a name="SimpleTmi1637Interface"></a>
+### SimpleTmi1637Interface
 
-The `SimpleTmiInterface` can be used like this to communicate with a TM1637
+The `SimpleTmi1637Interface` can be used like this to communicate with a TM1637
 controller chip. It looks like this:
 
 ```C++
-class SimpleTmiInterface {
+class SimpleTmi1637Interface {
   public:
-    explicit SimpleTmiInterface(
+    explicit SimpleTmi1637Interface(
         uint8_t dioPin,
         uint8_t clkPin,
         uint8_t delayMicros
@@ -223,7 +223,7 @@ It is configured and used by the calling code `MyClass` like this:
 ```C++
 #include <Arduino.h>
 #include <AceTMI.h>
-using ace_tmi::SimpleTmiInterface;
+using ace_tmi::SimpleTmi1637Interface;
 
 template <typename T_TMII>
 class MyClass {
@@ -258,7 +258,7 @@ const uint8_t CLK_PIN = 8;
 const uint8_t DIO_PIN = 9;
 const uint8_t DELAY_MICROS = 100;
 
-using TmiInterface = SimpleTmiInterface;
+using TmiInterface = SimpleTmi1637Interface;
 TmiInterface tmiInterface(DIO_PIN, CLK_PIN, DELAY_MICROS);
 MyClass<TmiInterface> myClass(tmiInterface);
 
@@ -277,11 +277,11 @@ with too many `#define` macros defined in the global namespace on Arduino
 platforms. The double `II` contains 2 `Interface`, the first referring to the
 TM1637 protocol, and the second referring to classes in this library.
 
-<a name="SimpleTmiFastInterface"></a>
-### SimpleTmiFastInterface
+<a name="SimpleTmi1637FastInterface"></a>
+### SimpleTmi1637FastInterface
 
-The `SimpleTmiFastInterface` is identical to `SimpleTmiInterface` except that it
-uses `digitalWriteFast()`. It looks like this:
+The `SimpleTmi1637FastInterface` is identical to `SimpleTmi1637Interface` except
+that it uses `digitalWriteFast()`. It looks like this:
 
 ```C++
 template <
@@ -289,9 +289,9 @@ template <
     uint8_t T_CLK_PIN,
     uint8_t T_DELAY_MICROS
 >
-class SimpleTmiFastInterface {
+class SimpleTmi1637FastInterface {
   public:
-    explicit SimpleTmiFastInterface() = default;
+    explicit SimpleTmi1637FastInterface() = default;
 
     void begin() const;
     void end() const;
@@ -309,8 +309,8 @@ It is configured and used by the calling code `MyClass` like this:
 #include <AceTMI.h>
 #if defined(ARDUINO_ARCH_AVR)
   #include <digitalWriteFast.h>
-  #include <ace_tmi/SimpleTmiFastInterface.h>
-  using ace_tmi::SimpleTmiInterface;
+  #include <ace_tmi/SimpleTmi1637FastInterface.h>
+  using ace_tmi::SimpleTmi1637Interface;
 #endif
 
 const uint8_t CLK_PIN = 8;
@@ -322,7 +322,7 @@ class MyClass {
   // Exactly same as above.
 };
 
-using TmiInterface = SimpleTmiFastInterface<DIO_PIN, CLK_PIN, DELAY_MICROS>;
+using TmiInterface = SimpleTmi1637FastInterface<DIO_PIN, CLK_PIN, DELAY_MICROS>;
 TmiInterface tmiInterface;
 MyClass<TmiInterface> myClass(tmiInterface);
 
@@ -501,12 +501,13 @@ class MyClass {
 };
 ```
 
-The internal size of the `SimpleTmiInterface` object is just 3 bytes, and the
-size of the `SimpleTmiFastInterface` is even smaller at 0 bytes, so we do not
-save much memory by storing these by reference. But storing the `mTmiInterface`
-as a reference causes an unnecessary extra layer of indirection every time the
-`mTmiInterface` object is called. In almost every case, I recommend storing the
-`XxxInterface` object **by value** into the `MyClass` object.
+The internal size of the `SimpleTmi1637Interface` object is just 3 bytes, and
+the size of the `SimpleTmi1637FastInterface` is even smaller at 0 bytes, so we
+do not save much memory by storing these by reference. But storing the
+`mTmiInterface` as a reference causes an unnecessary extra layer of indirection
+every time the `mTmiInterface` object is called. In almost every case, I
+recommend storing the `XxxInterface` object **by value** into the `MyClass`
+object.
 
 <a name="ResourceConsumption"></a>
 ## Resource Consumption
@@ -525,8 +526,8 @@ The Memory benchmark numbers can be seen in
 |---------------------------------+--------------+-------------|
 | baseline                        |    456/   11 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |   1200/   14 |   744/    3 |
-| SimpleTmiFastInterface          |    638/   11 |   182/    0 |
+| SimpleTmi1637Interface          |   1200/   14 |   744/    3 |
+| SimpleTmi1637FastInterface      |    638/   11 |   182/    0 |
 | SimpleTmi1638Interface          |   1108/   15 |   652/    4 |
 | SimpleTmi1638FastInterface      |    590/   11 |   134/    0 |
 +--------------------------------------------------------------+
@@ -540,7 +541,7 @@ The Memory benchmark numbers can be seen in
 |---------------------------------+--------------+-------------|
 | baseline                        | 260089/27892 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              | 261361/27992 |  1272/  100 |
+| SimpleTmi1637Interface          | 261361/27992 |  1272/  100 |
 | SimpleTmi1638Interface          | 261217/27992 |  1128/  100 |
 +--------------------------------------------------------------+
 ```
@@ -557,8 +558,8 @@ The CPU benchmark numbers can be seen in
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   752/  781/  836 |     41.0 |
-| SimpleTmiFastInterface,1us              |    92/   95/  104 |    336.8 |
+| SimpleTmi1637Interface,1us              |   752/  781/  836 |     41.0 |
+| SimpleTmi1637FastInterface,1us          |    92/   95/  104 |    336.8 |
 | SimpleTmi1638Interface,1us              |   616/  635/  688 |     50.4 |
 | SimpleTmi1638FastInterface,1us          |    84/   86/   92 |    372.1 |
 +-----------------------------------------+-------------------+----------+
@@ -570,7 +571,7 @@ The CPU benchmark numbers can be seen in
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   375/  377/  415 |     84.9 |
+| SimpleTmi1637Interface,1us              |   375/  377/  415 |     84.9 |
 | SimpleTmi1638Interface,1us              |   334/  335/  354 |     95.5 |
 +-----------------------------------------+-------------------+----------+
 ```
