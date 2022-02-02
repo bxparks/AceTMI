@@ -16,7 +16,7 @@
 set -eu
 
 PROGRAM_NAME='MemoryBenchmark.ino'
-NUM_FEATURES=2  # excluding FEATURE_BASELINE
+NUM_FEATURES=4  # excluding FEATURE_BASELINE
 
 # Assume that https://github.com/bxparks/AUniter is installed as a
 # sibling project to AceTMI.
