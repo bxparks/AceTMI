@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AceTMI: ace_tmi::SimpleTmiInterface Class Reference</title>
+<title>AceTMI: ace_tmi::SimpleTmi1637Interface Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.4</span>
+   &#160;<span id="projectnumber">0.5</span>
    </div>
    <div id="projectbrief">Interfaces for communicating with the TM1637 and TM1638 LED controllers on Arduino platforms</div>
   </td>
@@ -63,52 +63,52 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>ace_tmi</b></li><li class="navelem"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html">SimpleTmiInterface</a></li>  </ul>
+<li class="navelem"><b>ace_tmi</b></li><li class="navelem"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html">SimpleTmi1637Interface</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classace__tmi_1_1SimpleTmiInterface-members.html">List of all members</a>  </div>
+<a href="classace__tmi_1_1SimpleTmi1637Interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ace_tmi::SimpleTmiInterface Class Reference</div>  </div>
+<div class="title">ace_tmi::SimpleTmi1637Interface Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Class that knows how to communicate with a TM1637 chip.  
- <a href="classace__tmi_1_1SimpleTmiInterface.html#details">More...</a></p>
+ <a href="classace__tmi_1_1SimpleTmi1637Interface.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8082581169f1434f614bc359c1423297"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a8082581169f1434f614bc359c1423297">SimpleTmiInterface</a> (uint8_t dioPin, uint8_t clkPin, uint8_t delayMicros)</td></tr>
-<tr class="memdesc:a8082581169f1434f614bc359c1423297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classace__tmi_1_1SimpleTmiInterface.html#a8082581169f1434f614bc359c1423297">More...</a><br /></td></tr>
-<tr class="separator:a8082581169f1434f614bc359c1423297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a258ea205516c6b9d750c0e051975dbed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a258ea205516c6b9d750c0e051975dbed">begin</a> () const</td></tr>
-<tr class="memdesc:a258ea205516c6b9d750c0e051975dbed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the DIO and CLK pins.  <a href="classace__tmi_1_1SimpleTmiInterface.html#a258ea205516c6b9d750c0e051975dbed">More...</a><br /></td></tr>
-<tr class="separator:a258ea205516c6b9d750c0e051975dbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af245b573d7ae197d980b870951078cfb"><td class="memItemLeft" align="right" valign="top"><a id="af245b573d7ae197d980b870951078cfb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#af245b573d7ae197d980b870951078cfb">end</a> () const</td></tr>
-<tr class="memdesc:af245b573d7ae197d980b870951078cfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dio and clk pins to INPUT mode. <br /></td></tr>
-<tr class="separator:af245b573d7ae197d980b870951078cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a587812128aee98f03720940ddddc744f"><td class="memItemLeft" align="right" valign="top"><a id="a587812128aee98f03720940ddddc744f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a587812128aee98f03720940ddddc744f">startCondition</a> () const</td></tr>
-<tr class="memdesc:a587812128aee98f03720940ddddc744f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like start condition. <br /></td></tr>
-<tr class="separator:a587812128aee98f03720940ddddc744f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae745d33c115acf4879f426f4991a0cd7"><td class="memItemLeft" align="right" valign="top"><a id="ae745d33c115acf4879f426f4991a0cd7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ae745d33c115acf4879f426f4991a0cd7">stopCondition</a> () const</td></tr>
-<tr class="memdesc:ae745d33c115acf4879f426f4991a0cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like stop condition. <br /></td></tr>
-<tr class="separator:ae745d33c115acf4879f426f4991a0cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9c4066f59f449211b5ecf3448755b5e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e">write</a> (uint8_t data) const</td></tr>
-<tr class="memdesc:ac9c4066f59f449211b5ecf3448755b5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e">More...</a><br /></td></tr>
-<tr class="separator:ac9c4066f59f449211b5ecf3448755b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94115cbf79c461b071a39c9426b0bb49"><td class="memItemLeft" align="right" valign="top"><a id="a94115cbf79c461b071a39c9426b0bb49"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SimpleTmiInterface</b> (const <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html">SimpleTmiInterface</a> &amp;)=default</td></tr>
-<tr class="separator:a94115cbf79c461b071a39c9426b0bb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa009bdad8a52b24250624c331b249898"><td class="memItemLeft" align="right" valign="top"><a id="aa009bdad8a52b24250624c331b249898"></a>
-<a class="el" href="classace__tmi_1_1SimpleTmiInterface.html">SimpleTmiInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html">SimpleTmiInterface</a> &amp;)=default</td></tr>
-<tr class="separator:aa009bdad8a52b24250624c331b249898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff4414cae78bd56a520ab1191a7e2ed4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#aff4414cae78bd56a520ab1191a7e2ed4">SimpleTmi1637Interface</a> (uint8_t dioPin, uint8_t clkPin, uint8_t delayMicros)</td></tr>
+<tr class="memdesc:aff4414cae78bd56a520ab1191a7e2ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classace__tmi_1_1SimpleTmi1637Interface.html#aff4414cae78bd56a520ab1191a7e2ed4">More...</a><br /></td></tr>
+<tr class="separator:aff4414cae78bd56a520ab1191a7e2ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb31c95fde309f73bd913a549a47e3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#aabb31c95fde309f73bd913a549a47e3e">begin</a> () const</td></tr>
+<tr class="memdesc:aabb31c95fde309f73bd913a549a47e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the DIO and CLK pins.  <a href="classace__tmi_1_1SimpleTmi1637Interface.html#aabb31c95fde309f73bd913a549a47e3e">More...</a><br /></td></tr>
+<tr class="separator:aabb31c95fde309f73bd913a549a47e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8734119602ed8783ce9ddd86f4b73b68"><td class="memItemLeft" align="right" valign="top"><a id="a8734119602ed8783ce9ddd86f4b73b68"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#a8734119602ed8783ce9ddd86f4b73b68">end</a> () const</td></tr>
+<tr class="memdesc:a8734119602ed8783ce9ddd86f4b73b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dio and clk pins to INPUT mode. <br /></td></tr>
+<tr class="separator:a8734119602ed8783ce9ddd86f4b73b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f638f23cea898773f676a578167c8b"><td class="memItemLeft" align="right" valign="top"><a id="ad5f638f23cea898773f676a578167c8b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#ad5f638f23cea898773f676a578167c8b">startCondition</a> () const</td></tr>
+<tr class="memdesc:ad5f638f23cea898773f676a578167c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like start condition. <br /></td></tr>
+<tr class="separator:ad5f638f23cea898773f676a578167c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1735ef0cd9df86fe54d516eb10b8cc1a"><td class="memItemLeft" align="right" valign="top"><a id="a1735ef0cd9df86fe54d516eb10b8cc1a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#a1735ef0cd9df86fe54d516eb10b8cc1a">stopCondition</a> () const</td></tr>
+<tr class="memdesc:a1735ef0cd9df86fe54d516eb10b8cc1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the I2C-like stop condition. <br /></td></tr>
+<tr class="separator:a1735ef0cd9df86fe54d516eb10b8cc1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1922dd53941a6a00948f8849a6a6afc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#ab1922dd53941a6a00948f8849a6a6afc">write</a> (uint8_t data) const</td></tr>
+<tr class="memdesc:ab1922dd53941a6a00948f8849a6a6afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmi1637Interface.html#ab1922dd53941a6a00948f8849a6a6afc">More...</a><br /></td></tr>
+<tr class="separator:ab1922dd53941a6a00948f8849a6a6afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb57a7333d25baf0df9de28203103aac"><td class="memItemLeft" align="right" valign="top"><a id="adb57a7333d25baf0df9de28203103aac"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SimpleTmi1637Interface</b> (const <a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html">SimpleTmi1637Interface</a> &amp;)=default</td></tr>
+<tr class="separator:adb57a7333d25baf0df9de28203103aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bcefa52c28655d376c50a80c7ca7aea"><td class="memItemLeft" align="right" valign="top"><a id="a4bcefa52c28655d376c50a80c7ca7aea"></a>
+<a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html">SimpleTmi1637Interface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html">SimpleTmi1637Interface</a> &amp;)=default</td></tr>
+<tr class="separator:a4bcefa52c28655d376c50a80c7ca7aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that knows how to communicate with a TM1637 chip. </p>
@@ -127,10 +127,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </ul>
 <p>Since the protocol does not match I2C, we cannot use the hardware I2C capabilities of the microcontroller, so we have to implement a software version of this protocol. </p>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00063">63</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmi1637Interface_8h_source.html#l00063">63</a> of file <a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8082581169f1434f614bc359c1423297"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8082581169f1434f614bc359c1423297">&#9670;&nbsp;</a></span>SimpleTmiInterface()</h2>
+<a id="aff4414cae78bd56a520ab1191a7e2ed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4414cae78bd56a520ab1191a7e2ed4">&#9670;&nbsp;</a></span>SimpleTmi1637Interface()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,7 +139,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ace_tmi::SimpleTmiInterface::SimpleTmiInterface </td>
+          <td class="memname">ace_tmi::SimpleTmi1637Interface::SimpleTmi1637Interface </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>dioPin</em>, </td>
@@ -180,13 +180,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00077">77</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmi1637Interface_8h_source.html#l00077">77</a> of file <a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a258ea205516c6b9d750c0e051975dbed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a258ea205516c6b9d750c0e051975dbed">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="aabb31c95fde309f73bd913a549a47e3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabb31c95fde309f73bd913a549a47e3e">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +195,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void ace_tmi::SimpleTmiInterface::begin </td>
+          <td class="memname">void ace_tmi::SimpleTmi1637Interface::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -211,12 +211,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Initialize the DIO and CLK pins. </p>
 <p>These are open-drain lines, with pull-up resistors. We must not drive them HIGH actively since that could damage the transitor at the other end of the line pulling LOW. Instead, we go into INPUT mode to let the line to HIGH through the pullup resistor, then go to OUTPUT mode only to pull down. </p>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00096">96</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmi1637Interface_8h_source.html#l00096">96</a> of file <a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>.</p>
 
 </div>
 </div>
-<a id="ac9c4066f59f449211b5ecf3448755b5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9c4066f59f449211b5ecf3448755b5e">&#9670;&nbsp;</a></span>write()</h2>
+<a id="ab1922dd53941a6a00948f8849a6a6afc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1922dd53941a6a00948f8849a6a6afc">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +225,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ace_tmi::SimpleTmiInterface::write </td>
+          <td class="memname">uint8_t ace_tmi::SimpleTmi1637Interface::write </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -241,14 +241,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C. </p>
 <p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
-<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. (This retains consistency with AceWire's I2C <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e" title="Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.">write()</a></code> methods which return the number of bytes transfered.) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. (This retains consistency with AceWire's I2C <code><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#ab1922dd53941a6a00948f8849a6a6afc" title="Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.">write()</a></code> methods which return the number of bytes transfered.) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiInterface_8h_source.html#l00141">141</a> of file <a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmi1637Interface_8h_source.html#l00141">141</a> of file <a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/brian/src/AceTMI/src/ace_tmi/<a class="el" href="SimpleTmiInterface_8h_source.html">SimpleTmiInterface.h</a></li>
+<li>/home/brian/src/AceTMI/src/ace_tmi/<a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
