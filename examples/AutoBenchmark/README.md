@@ -1,9 +1,10 @@
 # AutoBenchmark
 
 This program measures the performance of various implementations of the TM1637
-protocol in the AceTMI library: `SimpleTmiInterface` and `SimpleTmiFastInterface`.
+protocol in the AceTMI library: `SimpleTmi1637Interface` and
+`SimpleTmi1637FastInterface`.
 
-**Version**: AceTMI v0.4
+**Version**: AceTMI v0.5
 
 **DO NOT EDIT**: This file was auto-generated using `make README.md`.
 
@@ -66,14 +67,16 @@ number of `TimingStats::update()` calls that were made.
 
 The following tables show the number of microseconds taken by:
 
-* `SimpleTmiInterface`
-* `SimpleTmiFastInterface`
+* `SimpleTmi1637Interface`
+* `SimpleTmi1637FastInterface`
+* `SimpleTmi1638Interface`
+* `SimpleTmi1638FastInterface`
 
 On AVR processors, the "fast" options are available using one of the
 digitalWriteFast libraries whose `digitalWriteFast()` functions can be up to 50X
 faster if the `pin` number and `value` parameters are compile-time constants. In
 addition, the `digitalWriteFast` functions reduce flash memory consumption by
-600-700 bytes compared to their non-fast equivalents.
+500-700 bytes compared to their non-fast equivalents.
 
 ### Arduino Nano
 
@@ -84,8 +87,8 @@ addition, the `digitalWriteFast` functions reduce flash memory consumption by
 
 ```
 Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
-sizeof(SimpleTmiFastInterface<4, 5, 100>): 1
+sizeof(SimpleTmi1637Interface): 3
+sizeof(SimpleTmi1637FastInterface<4, 5, 100>): 1
 sizeof(SimpleTmi1638Interface): 4
 sizeof(SimpleTmi1638FastInterface<4, 5, 6, 1>): 1
 
@@ -93,8 +96,8 @@ CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   752/  781/  836 |     41.0 |
-| SimpleTmiFastInterface,1us              |    92/   95/  104 |    336.8 |
+| SimpleTmi1637Interface,1us              |   752/  781/  836 |     41.0 |
+| SimpleTmi1637FastInterface,1us          |    92/   95/  104 |    336.8 |
 | SimpleTmi1638Interface,1us              |   616/  635/  688 |     50.4 |
 | SimpleTmi1638FastInterface,1us          |    84/   86/   92 |    372.1 |
 +-----------------------------------------+-------------------+----------+
@@ -110,8 +113,8 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
-sizeof(SimpleTmiFastInterface<4, 5, 100>): 1
+sizeof(SimpleTmi1637Interface): 3
+sizeof(SimpleTmi1637FastInterface<4, 5, 100>): 1
 sizeof(SimpleTmi1638Interface): 4
 sizeof(SimpleTmi1638FastInterface<4, 5, 6, 1>): 1
 
@@ -119,8 +122,8 @@ CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   756/  761/  764 |     42.0 |
-| SimpleTmiFastInterface,1us              |    84/   88/   96 |    363.6 |
+| SimpleTmi1637Interface,1us              |   756/  761/  764 |     42.0 |
+| SimpleTmi1637FastInterface,1us          |    84/   88/   96 |    363.6 |
 | SimpleTmi1638Interface,1us              |   756/  764/  768 |     41.9 |
 | SimpleTmi1638FastInterface,1us          |    76/   79/   88 |    405.1 |
 +-----------------------------------------+-------------------+----------+
@@ -135,14 +138,14 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1637Interface): 3
 sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   877/  882/  910 |     36.3 |
+| SimpleTmi1637Interface,1us              |   877/  882/  910 |     36.3 |
 | SimpleTmi1638Interface,1us              |   433/  435/  438 |     73.6 |
 +-----------------------------------------+-------------------+----------+
 
@@ -156,14 +159,14 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1637Interface): 3
 sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   375/  377/  415 |     84.9 |
+| SimpleTmi1637Interface,1us              |   375/  377/  415 |     84.9 |
 | SimpleTmi1638Interface,1us              |   334/  335/  354 |     95.5 |
 +-----------------------------------------+-------------------+----------+
 
@@ -177,14 +180,14 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1637Interface): 3
 sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   230/  231/  238 |    138.5 |
+| SimpleTmi1637Interface,1us              |   230/  231/  238 |    138.5 |
 | SimpleTmi1638Interface,1us              |   171/  173/  180 |    185.0 |
 +-----------------------------------------+-------------------+----------+
 
@@ -199,14 +202,14 @@ CPU:
 
 ```
 Sizes of Objects:
-sizeof(SimpleTmiInterface): 3
+sizeof(SimpleTmi1637Interface): 3
 sizeof(SimpleTmi1638Interface): 4
 
 CPU:
 +-----------------------------------------+-------------------+----------+
 | Functionality                           |   min/  avg/  max | eff kbps |
 |-----------------------------------------+-------------------+----------|
-| SimpleTmiInterface,1us                  |   177/  177/  181 |    180.8 |
+| SimpleTmi1637Interface,1us              |   177/  177/  181 |    180.8 |
 | SimpleTmi1638Interface,1us              |   151/  151/  154 |    211.9 |
 +-----------------------------------------+-------------------+----------+
 

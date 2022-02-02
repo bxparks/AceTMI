@@ -14,7 +14,7 @@ by the runtime environment of the processor. For example, it often seems like
 the ESP8266 allocates flash memory in blocks of a certain quantity, so the
 calculated flash size can jump around in unexpected ways.
 
-**Version**: AceTMI v0.4
+**Version**: AceTMI v0.5
 
 **DO NOT EDIT**: This file was auto-generated using `make README.md`.
 
@@ -66,13 +66,13 @@ $ make README.md
 The following shows the flash and static memory sizes of the `MemoryBenchmark`
 program for various `LedModule` configurations and various Writer classes.
 
-* `SimpleTmiInterface`: implementation using `digitalWrite()`
-* `SimpleTmiFastInterface`: implementation using `digitalWriteFast()`
+* `SimpleTmi1637Interface`: implementation using `digitalWrite()`
+* `SimpleTmi1637FastInterface`: implementation using `digitalWriteFast()`
 
 ### ATtiny85
 
 * 8MHz ATtiny85
-* Arduino IDE 1.8.13
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
 * SpenceKonde/ATTinyCore 1.5.2
 
 ```
@@ -81,8 +81,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |    260/   11 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |    924/   14 |   664/    3 |
-| SimpleTmiFastInterface          |    374/   11 |   114/    0 |
+| SimpleTmi1637Interface          |    924/   14 |   664/    3 |
+| SimpleTmi1637FastInterface      |    374/   11 |   114/    0 |
 | SimpleTmi1638Interface          |    844/   15 |   584/    4 |
 | SimpleTmi1638FastInterface      |    362/   11 |   102/    0 |
 +--------------------------------------------------------------+
@@ -92,8 +92,8 @@ program for various `LedModule` configurations and various Writer classes.
 ### Arduino Nano
 
 * 16MHz ATmega328P
-* Arduino IDE 1.8.13
-* Arduino AVR Boards 1.8.3
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* Arduino AVR Boards 1.8.4
 
 ```
 +--------------------------------------------------------------+
@@ -101,8 +101,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |    456/   11 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |   1200/   14 |   744/    3 |
-| SimpleTmiFastInterface          |    638/   11 |   182/    0 |
+| SimpleTmi1637Interface          |   1200/   14 |   744/    3 |
+| SimpleTmi1637FastInterface      |    638/   11 |   182/    0 |
 | SimpleTmi1638Interface          |   1108/   15 |   652/    4 |
 | SimpleTmi1638FastInterface      |    590/   11 |   134/    0 |
 +--------------------------------------------------------------+
@@ -112,7 +112,7 @@ program for various `LedModule` configurations and various Writer classes.
 ### Sparkfun Pro Micro
 
 * 16 MHz ATmega32U4
-* Arduino IDE 1.8.13
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
 * SparkFun AVR Boards 1.1.13
 
 ```
@@ -121,8 +121,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |   3472/  151 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |   4292/  154 |   820/    3 |
-| SimpleTmiFastInterface          |   3654/  151 |   182/    0 |
+| SimpleTmi1637Interface          |   4292/  154 |   820/    3 |
+| SimpleTmi1637FastInterface      |   3654/  151 |   182/    0 |
 | SimpleTmi1638Interface          |   4200/  155 |   728/    4 |
 | SimpleTmi1638FastInterface      |   3606/  151 |   134/    0 |
 +--------------------------------------------------------------+
@@ -132,8 +132,8 @@ program for various `LedModule` configurations and various Writer classes.
 ### STM32 Blue Pill
 
 * STM32F103C8, 72 MHz ARM Cortex-M3
-* Arduino IDE 1.8.13
-* STM32duino 2.0.0
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* STM32duino 2.2.0
 
 ```
 +--------------------------------------------------------------+
@@ -141,7 +141,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |  21880/ 3540 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |  24532/ 3564 |  2652/   24 |
+| SimpleTmi1637Interface          |  24532/ 3564 |  2652/   24 |
 | SimpleTmi1638Interface          |  24384/ 3564 |  2504/   24 |
 +--------------------------------------------------------------+
 
@@ -150,8 +150,8 @@ program for various `LedModule` configurations and various Writer classes.
 ### ESP8266
 
 * NodeMCU 1.0, 80MHz ESP8266
-* Arduino IDE 1.8.13
-* ESP8266 Boards 2.7.4
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* ESP8266 Boards 3.0.2
 
 ```
 +--------------------------------------------------------------+
@@ -159,7 +159,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        | 260089/27892 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              | 261361/27992 |  1272/  100 |
+| SimpleTmi1637Interface          | 261361/27992 |  1272/  100 |
 | SimpleTmi1638Interface          | 261217/27992 |  1128/  100 |
 +--------------------------------------------------------------+
 
@@ -168,8 +168,8 @@ program for various `LedModule` configurations and various Writer classes.
 ### ESP32
 
 * ESP32-01 Dev Board, 240 MHz Tensilica LX6
-* Arduino IDE 1.8.13
-* ESP32 Boards 1.0.6
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* ESP32 Boards 2.0.2
 
 ```
 +--------------------------------------------------------------+
@@ -177,7 +177,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        | 204501/16060 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              | 207489/16228 |  2988/  168 |
+| SimpleTmi1637Interface          | 207489/16228 |  2988/  168 |
 | SimpleTmi1638Interface          | 207305/16228 |  2804/  168 |
 +--------------------------------------------------------------+
 
@@ -186,8 +186,8 @@ program for various `LedModule` configurations and various Writer classes.
 ### Teensy 3.2
 
 * 96 MHz ARM Cortex-M4
-* Arduino IDE 1.8.13
-* Teensyduino 1.53
+* Arduino IDE 1.8.19, Arduino CLI 0.19.2
+* Teensyduino 1.56
 * Compiler options: "Faster"
 
 ```
@@ -196,7 +196,7 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | baseline                        |  10216/ 4152 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |  11544/ 4156 |  1328/    4 |
+| SimpleTmi1637Interface          |  11544/ 4156 |  1328/    4 |
 | SimpleTmi1638Interface          |  11220/ 4156 |  1004/    4 |
 +--------------------------------------------------------------+
 

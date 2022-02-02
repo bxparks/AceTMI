@@ -1,6 +1,11 @@
 # Changelog
 
 * Unreleased
+* 0.5 (2022-02-02)
+    * **Breaking Change**: Rename TM1637 classes for consistency with TM1638
+      classes.
+        * Rename `SimpleTmiInterface` to `SimpleTmi1637Interface`.
+        * Rename `SimpleTmiFastInterface` to `SimpleTmi1637FastInterface`.
 * 0.4 (2022-02-01)
     * Add support for the TM1638 controller which uses an SPI-like protocol.
         * Add `SimpleTmi1638Interface` and `SimpleTmi1638FastInterface`.

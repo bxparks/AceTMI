@@ -30,7 +30,7 @@ volatile int disableCompilerOptimization = 0;
   #include <AceTMI.h>
   #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
     #include <digitalWriteFast.h>
-    #include <ace_tmi/SimpleTmiFastInterface.h>
+    #include <ace_tmi/SimpleTmi1637FastInterface.h>
     #include <ace_tmi/SimpleTmi1638FastInterface.h>
   #endif
   using namespace ace_tmi;
@@ -41,7 +41,7 @@ volatile int disableCompilerOptimization = 0;
   const uint8_t BIT_DELAY = 100;
 
   #if FEATURE == FEATURE_TMI
-    using TmiInterface = SimpleTmiInterface;
+    using TmiInterface = SimpleTmi1637Interface;
     TmiInterface tmiInterface(DIO_PIN, CLK_PIN, BIT_DELAY);
 
   #elif FEATURE == FEATURE_TMI_FAST
@@ -49,7 +49,8 @@ volatile int disableCompilerOptimization = 0;
       #error Unsupported FEATURE on this platform
     #endif
 
-    using TmiInterface = SimpleTmiFastInterface<DIO_PIN, CLK_PIN, BIT_DELAY>;
+    using TmiInterface = SimpleTmi1637FastInterface<
+        DIO_PIN, CLK_PIN, BIT_DELAY>;
     TmiInterface tmiInterface;
 
   #elif FEATURE == FEATURE_TMI_1638

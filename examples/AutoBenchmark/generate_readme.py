@@ -23,9 +23,10 @@ print(f"""\
 # AutoBenchmark
 
 This program measures the performance of various implementations of the TM1637
-protocol in the AceTMI library: `SimpleTmiInterface` and `SimpleTmiFastInterface`.
+protocol in the AceTMI library: `SimpleTmi1637Interface` and
+`SimpleTmi1637FastInterface`.
 
-**Version**: AceTMI v0.4
+**Version**: AceTMI v0.5
 
 **DO NOT EDIT**: This file was auto-generated using `make README.md`.
 
@@ -88,8 +89,8 @@ number of `TimingStats::update()` calls that were made.
 
 The following tables show the number of microseconds taken by:
 
-* `SimpleTmiInterface`
-* `SimpleTmiFastInterface`
+* `SimpleTmi1637Interface`
+* `SimpleTmi1637FastInterface`
 * `SimpleTmi1638Interface`
 * `SimpleTmi1638FastInterface`
 
