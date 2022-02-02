@@ -1,7 +1,8 @@
 /*
- * A program which compiles different implementations of the TM1637 communcation
- * protocol in the AceTMI library to determine the flash and static memory sizes
- * from the output of the compiler. See the generated README.md for details.
+ * A program which compiles different implementations of the TM1637 and TM1638
+ * communcation protocol in the AceTMI library to determine the flash and static
+ * memory sizes from the output of the compiler. See the generated README.md for
+ * details.
  */
 
 #include <Arduino.h>
@@ -18,6 +19,8 @@
 #define FEATURE_BASELINE 0
 #define FEATURE_TMI 1
 #define FEATURE_TMI_FAST 2
+#define FEATURE_TMI_1638 3
+#define FEATURE_TMI_1638_FAST 4
 
 // A volatile integer to prevent the compiler from optimizing away the entire
 // program.
@@ -28,11 +31,13 @@ volatile int disableCompilerOptimization = 0;
   #if defined(ARDUINO_ARCH_AVR) || defined(EPOXY_DUINO)
     #include <digitalWriteFast.h>
     #include <ace_tmi/SimpleTmiFastInterface.h>
+    #include <ace_tmi/SimpleTmi1638FastInterface.h>
   #endif
   using namespace ace_tmi;
 
   const uint8_t CLK_PIN = 16;
   const uint8_t DIO_PIN = 10;
+  const uint8_t STB_PIN = 11;
   const uint8_t BIT_DELAY = 100;
 
   #if FEATURE == FEATURE_TMI
@@ -45,6 +50,19 @@ volatile int disableCompilerOptimization = 0;
     #endif
 
     using TmiInterface = SimpleTmiFastInterface<DIO_PIN, CLK_PIN, BIT_DELAY>;
+    TmiInterface tmiInterface;
+
+  #elif FEATURE == FEATURE_TMI_1638
+    using TmiInterface = SimpleTmi1638Interface;
+    TmiInterface tmiInterface(DIO_PIN, CLK_PIN, STB_PIN, BIT_DELAY);
+
+  #elif FEATURE == FEATURE_TMI_1638_FAST
+    #if ! defined(ARDUINO_ARCH_AVR) && ! defined(EPOXY_DUINO)
+      #error Unsupported FEATURE on this platform
+    #endif
+
+    using TmiInterface = SimpleTmi1638FastInterface<
+        DIO_PIN, CLK_PIN, STB_PIN, BIT_DELAY>;
     TmiInterface tmiInterface;
   #endif
 #endif
@@ -67,9 +85,9 @@ volatile int disableCompilerOptimization = 0;
 #endif
 
 void setup() {
-#if defined(TEENSYDUINO)
-  foo = new FooClass();
-#endif
+  #if defined(TEENSYDUINO)
+    foo = new FooClass();
+  #endif
 
   disableCompilerOptimization = 3;
 
@@ -80,34 +98,40 @@ void setup() {
 // ScanningModule performs a digitalWrite(), which has the same effect of
 // disabling optimizations.
 
-#if FEATURE == FEATURE_TMI
-  tmiInterface.begin();
-
-#elif FEATURE == FEATURE_TMI_FAST
-  tmiInterface.begin();
-
-#endif
+  #if FEATURE == FEATURE_BASELINE
+    // do nothing
+  #elif FEATURE == FEATURE_TMI \
+      || FEATURE == FEATURE_TMI_FAST \
+      || FEATURE == FEATURE_TMI_1638 \
+      || FEATURE == FEATURE_TMI_1638_FAST
+    tmiInterface.begin();
+  #endif
 }
 
 void loop() {
-#if defined(TEENSYDUINO)
-  foo->doit();
-#endif
+  #if defined(TEENSYDUINO)
+    foo->doit();
+  #endif
 
-#if FEATURE == FEATURE_BASELINE
-  // do nothing
-
-#elif FEATURE == FEATURE_TMI \
-    || FEATURE == FEATURE_TMI_FAST
-  tmiInterface.startCondition();
-  tmiInterface.write(0x11);
-  tmiInterface.write(0x11);
-  tmiInterface.write(0x11);
-  tmiInterface.write(0x11);
-  tmiInterface.stopCondition();
-
-#else
-  #error Unknown FEATURE
-
-#endif
+  #if FEATURE == FEATURE_BASELINE
+    // do nothing
+  #elif FEATURE == FEATURE_TMI \
+      || FEATURE == FEATURE_TMI_FAST
+    tmiInterface.startCondition();
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x11);
+    tmiInterface.stopCondition();
+  #elif FEATURE == FEATURE_TMI_1638 \
+      || FEATURE == FEATURE_TMI_1638_FAST
+    tmiInterface.beginTransaction();
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x11);
+    tmiInterface.write(0x11);
+    tmiInterface.endTransaction();
+  #else
+    #error Unknown FEATURE
+  #endif
 }

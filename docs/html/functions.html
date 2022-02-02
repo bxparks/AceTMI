@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.3</span>
+   &#160;<span id="projectnumber">0.4</span>
    </div>
-   <div id="projectbrief">Unified interface for selecting different implementations for communicating with a TM1637 LED controller chip on Arduino platforms</div>
+   <div id="projectbrief">Interfaces for communicating with the TM1637 and TM1638 LED controllers on Arduino platforms</div>
   </td>
  </tr>
  </tbody>
@@ -65,12 +65,30 @@ $(function() {
 <div class="contents">
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
 <li>begin()
-: <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a988aa1e7815f234a171b8bce82ee945d">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a523970a73c88d6e772f6cd4a35397a88">ace_tmi::SimpleTmi1638FastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmi1638Interface.html#adcb5b458dcc8d5d15f6f6fc9acbb5a47">ace_tmi::SimpleTmi1638Interface</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a988aa1e7815f234a171b8bce82ee945d">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
 , <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#a258ea205516c6b9d750c0e051975dbed">ace_tmi::SimpleTmiInterface</a>
 </li>
+<li>beginTransaction()
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a14fba9929d11b5b0d5fcd397b2755e1b">ace_tmi::SimpleTmi1638FastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmi1638Interface.html#a16a37415b00021d0b55a3edd4815ab05">ace_tmi::SimpleTmi1638Interface</a>
+</li>
 <li>end()
-: <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#ac62c4931c0f813cb9c002da564d12e68">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#af82424c1dba4f4b7126f17e938377968">ace_tmi::SimpleTmi1638FastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmi1638Interface.html#a0655f757351318d322770eb32d4fb7db">ace_tmi::SimpleTmi1638Interface</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#ac62c4931c0f813cb9c002da564d12e68">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
 , <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#af245b573d7ae197d980b870951078cfb">ace_tmi::SimpleTmiInterface</a>
+</li>
+<li>endTransaction()
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#ac9df0ac85049f6c66e0db71cdf7bbf23">ace_tmi::SimpleTmi1638FastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmi1638Interface.html#a7846ab9f8547766bff9abe260b26c674">ace_tmi::SimpleTmi1638Interface</a>
+</li>
+<li>SimpleTmi1638FastInterface()
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a2171425ee0a5385bc2b6481da8420a5f">ace_tmi::SimpleTmi1638FastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;</a>
+</li>
+<li>SimpleTmi1638Interface()
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638Interface.html#a1472671b5260600a804fd8258abef7b2">ace_tmi::SimpleTmi1638Interface</a>
 </li>
 <li>SimpleTmiFastInterface()
 : <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a59d6773b94d1e127d7c7651efe48d39a">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
@@ -87,7 +105,9 @@ $(function() {
 , <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ae745d33c115acf4879f426f4991a0cd7">ace_tmi::SimpleTmiInterface</a>
 </li>
 <li>write()
-: <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
+: <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a8ca84c7aa2827f157519130707631b3a">ace_tmi::SimpleTmi1638FastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmi1638Interface.html#a76b737f53ee00324b47a98bb0ff651f9">ace_tmi::SimpleTmi1638Interface</a>
+, <a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de">ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &gt;</a>
 , <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html#ac9c4066f59f449211b5ecf3448755b5e">ace_tmi::SimpleTmiInterface</a>
 </li>
 </ul>

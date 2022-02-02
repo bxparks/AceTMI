@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.3</span>
+   &#160;<span id="projectnumber">0.4</span>
    </div>
-   <div id="projectbrief">Unified interface for selecting different implementations for communicating with a TM1637 LED controller chip on Arduino platforms</div>
+   <div id="projectbrief">Interfaces for communicating with the TM1637 and TM1638 LED controllers on Arduino platforms</div>
   </td>
  </tr>
  </tbody>
@@ -87,7 +87,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a59d6773b94d1e127d7c7651efe48d39a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
 <tr class="separator:a59d6773b94d1e127d7c7651efe48d39a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a988aa1e7815f234a171b8bce82ee945d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a988aa1e7815f234a171b8bce82ee945d">begin</a> () const</td></tr>
-<tr class="memdesc:a988aa1e7815f234a171b8bce82ee945d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the dio and clk pins.  <a href="classace__tmi_1_1SimpleTmiFastInterface.html#a988aa1e7815f234a171b8bce82ee945d">More...</a><br /></td></tr>
+<tr class="memdesc:a988aa1e7815f234a171b8bce82ee945d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the DIO and CLK pins.  <a href="classace__tmi_1_1SimpleTmiFastInterface.html#a988aa1e7815f234a171b8bce82ee945d">More...</a><br /></td></tr>
 <tr class="separator:a988aa1e7815f234a171b8bce82ee945d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac62c4931c0f813cb9c002da564d12e68"><td class="memItemLeft" align="right" valign="top"><a id="ac62c4931c0f813cb9c002da564d12e68"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#ac62c4931c0f813cb9c002da564d12e68">end</a> () const</td></tr>
@@ -118,8 +118,8 @@ class ace_tmi::SimpleTmiFastInterface&lt; T_DIO_PIN, T_CLK_PIN, T_DELAY_MICROS &
 <p>Exactly the same as <a class="el" href="classace__tmi_1_1SimpleTmiInterface.html" title="Class that knows how to communicate with a TM1637 chip.">SimpleTmiInterface</a> except that this uses the <code>digitalWriteFast</code> library on AVR processors. </p>
 <p>Normally, the digitalWriteFast library is used to get faster speeds over <code>digitalWrite()</code> and <code>pinMode()</code> functions. But speed of the <code>digitalWrite()</code> functions is not the limiting factor in this library because every bit flip is followed by a <code>delayMicroseconds()</code> which is far longer than the CPU cycle savings from <code>digitalWritFast()</code>.</p>
 <p>The reason that you may want to use <code>digitalWriteFast</code> library is because it consumes far less flash memory than normal <code>digitalWrite()</code>. The benchmarks in MemoryBenchmark shows that using this <code><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html" title="Exactly the same as SimpleTmiInterface except that this uses the digitalWriteFast library on AVR proc...">SimpleTmiFastInterface</a></code> instead of <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html" title="Class that knows how to communicate with a TM1637 chip.">SimpleTmiInterface</a></code> saves 650-770 bytes of flash on an AVR processor.</p>
-<p>Word of caution: There is a use-case where the normal <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html" title="Class that knows how to communicate with a TM1637 chip.">SimpleTmiInterface</a></code> might consume less flash memory. If your application uses more than one TM1637 LED Module, you will need to create multiple instances of the <code>Tm1637Module</code>. But the pin numbers of this class must be a compile-time constants, so different pins means that a different template class is generated. Since the <code>Tm1637Module</code> class takes a <code><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html" title="Exactly the same as SimpleTmiInterface except that this uses the digitalWriteFast library on AVR proc...">SimpleTmiFastInterface</a></code> as a template argument, each LED Module generate a new template instance of the <code>Tm1637Module</code> class.</p>
-<p>When there are more than some number of TM1636 LED modules, it may actually be more efficient to use the non-fast <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html" title="Class that knows how to communicate with a TM1637 chip.">SimpleTmiInterface</a></code>, because you will generate only a single template instantiation. I have not currently done any experiments to see where the break-even point would be.</p>
+<p>Caution: There might be a use-case where the normal <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html" title="Class that knows how to communicate with a TM1637 chip.">SimpleTmiInterface</a></code> might consume less flash memory. If your application uses more than one TM1637 LED Module, you will need to create multiple instances of the <code>Tm1637Module</code>. But the pin numbers of this class must be a compile-time constants, so different pins means that a different template class is generated. Since the <code>Tm1637Module</code> class takes a <code><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html" title="Exactly the same as SimpleTmiInterface except that this uses the digitalWriteFast library on AVR proc...">SimpleTmiFastInterface</a></code> as a template argument, each LED Module generate a new template instance of the <code>Tm1637Module</code> class.</p>
+<p>When there are more than some number of TM1637 LED modules, it may actually be more efficient to use the non-fast <code><a class="el" href="classace__tmi_1_1SimpleTmiInterface.html" title="Class that knows how to communicate with a TM1637 chip.">SimpleTmiInterface</a></code>, because you will generate only a single template instantiation. I have not currently done any experiments to see where the break-even point would be.</p>
 <p>The <code>delayMicroseconds()</code> may not be accurate for small values on some processors (e.g. AVR) . The actual minimum value of T_DELAY_MICROS will depend on the capacitance and resistance on the DIO and CLK lines, and the accuracy of the <code>delayMicroseconds()</code> function.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -157,10 +157,10 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_DELAY_MICROS&gt; </d
 </table>
 </div><div class="memdoc">
 
-<p>Initialize the dio and clk pins. </p>
+<p>Initialize the DIO and CLK pins. </p>
 <p>These are open-drain lines, with pull-up resistors. We must not drive them HIGH actively since that could damage the transitor at the other end of the line pulling LOW. Instead, we go into INPUT mode to let the line to HIGH through the pullup resistor, then go to OUTPUT mode only to pull down. </p>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiFastInterface_8h_source.html#l00088">88</a> of file <a class="el" href="SimpleTmiFastInterface_8h_source.html">SimpleTmiFastInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmiFastInterface_8h_source.html#l00089">89</a> of file <a class="el" href="SimpleTmiFastInterface_8h_source.html">SimpleTmiFastInterface.h</a>.</p>
 
 </div>
 </div>
@@ -192,9 +192,9 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_DELAY_MICROS&gt; </d
 
 <p>Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C. </p>
 <p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
-<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. (This retains consistency with AceWire's <code><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de" title="Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.">write()</a></code> method which returns the number of bytes transfered.) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if device responded with ACK, 0 for NACK. (This retains consistency with AceWire's I2C <code><a class="el" href="classace__tmi_1_1SimpleTmiFastInterface.html#a5f47efb6173c6dc0fa8d08d5260749de" title="Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.">write()</a></code> methods which return the number of bytes transfered.) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="SimpleTmiFastInterface_8h_source.html#l00133">133</a> of file <a class="el" href="SimpleTmiFastInterface_8h_source.html">SimpleTmiFastInterface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SimpleTmiFastInterface_8h_source.html#l00134">134</a> of file <a class="el" href="SimpleTmiFastInterface_8h_source.html">SimpleTmiFastInterface.h</a>.</p>
 
 </div>
 </div>

@@ -14,7 +14,7 @@ by the runtime environment of the processor. For example, it often seems like
 the ESP8266 allocates flash memory in blocks of a certain quantity, so the
 calculated flash size can jump around in unexpected ways.
 
-**Version**: AceTMI v0.3
+**Version**: AceTMI v0.4
 
 **DO NOT EDIT**: This file was auto-generated using `make README.md`.
 
@@ -34,7 +34,6 @@ produces the following files:
 attiny.txt
 nano.txt
 micro.txt
-samd.txt
 stm32.txt
 esp8266.txt
 esp32.txt
@@ -84,6 +83,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | SimpleTmiInterface              |    924/   14 |   664/    3 |
 | SimpleTmiFastInterface          |    374/   11 |   114/    0 |
+| SimpleTmi1638Interface          |    844/   15 |   584/    4 |
+| SimpleTmi1638FastInterface      |    362/   11 |   102/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -102,6 +103,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | SimpleTmiInterface              |   1200/   14 |   744/    3 |
 | SimpleTmiFastInterface          |    638/   11 |   182/    0 |
+| SimpleTmi1638Interface          |   1108/   15 |   652/    4 |
+| SimpleTmi1638FastInterface      |    590/   11 |   134/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -120,23 +123,8 @@ program for various `LedModule` configurations and various Writer classes.
 |---------------------------------+--------------+-------------|
 | SimpleTmiInterface              |   4292/  154 |   820/    3 |
 | SimpleTmiFastInterface          |   3654/  151 |   182/    0 |
-+--------------------------------------------------------------+
-
-```
-
-### SAMD21 M0 Mini
-
-* 48 MHz ARM Cortex-M0+
-* Arduino IDE 1.8.13
-* Sparkfun SAMD Core 1.8.3
-
-```
-+--------------------------------------------------------------+
-| functionality                   |  flash/  ram |       delta |
-|---------------------------------+--------------+-------------|
-| baseline                        |   9940/    0 |     0/    0 |
-|---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |  10308/    0 |   368/    0 |
+| SimpleTmi1638Interface          |   4200/  155 |   728/    4 |
+| SimpleTmi1638FastInterface      |   3606/  151 |   134/    0 |
 +--------------------------------------------------------------+
 
 ```
@@ -151,9 +139,10 @@ program for various `LedModule` configurations and various Writer classes.
 +--------------------------------------------------------------+
 | functionality                   |  flash/  ram |       delta |
 |---------------------------------+--------------+-------------|
-| baseline                        |  21420/ 3536 |     0/    0 |
+| baseline                        |  21880/ 3540 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |  24016/ 3560 |  2596/   24 |
+| SimpleTmiInterface              |  24532/ 3564 |  2652/   24 |
+| SimpleTmi1638Interface          |  24384/ 3564 |  2504/   24 |
 +--------------------------------------------------------------+
 
 ```
@@ -168,9 +157,10 @@ program for various `LedModule` configurations and various Writer classes.
 +--------------------------------------------------------------+
 | functionality                   |  flash/  ram |       delta |
 |---------------------------------+--------------+-------------|
-| baseline                        | 256700/26784 |     0/    0 |
+| baseline                        | 260089/27892 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              | 257588/26796 |   888/   12 |
+| SimpleTmiInterface              | 261361/27992 |  1272/  100 |
+| SimpleTmi1638Interface          | 261217/27992 |  1128/  100 |
 +--------------------------------------------------------------+
 
 ```
@@ -185,9 +175,10 @@ program for various `LedModule` configurations and various Writer classes.
 +--------------------------------------------------------------+
 | functionality                   |  flash/  ram |       delta |
 |---------------------------------+--------------+-------------|
-| baseline                        | 197748/13084 |     0/    0 |
+| baseline                        | 204501/16060 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              | 199202/13256 |  1454/  172 |
+| SimpleTmiInterface              | 207489/16228 |  2988/  168 |
+| SimpleTmi1638Interface          | 207305/16228 |  2804/  168 |
 +--------------------------------------------------------------+
 
 ```
@@ -203,9 +194,10 @@ program for various `LedModule` configurations and various Writer classes.
 +--------------------------------------------------------------+
 | functionality                   |  flash/  ram |       delta |
 |---------------------------------+--------------+-------------|
-| baseline                        |  10880/ 4152 |     0/    0 |
+| baseline                        |  10216/ 4152 |     0/    0 |
 |---------------------------------+--------------+-------------|
-| SimpleTmiInterface              |  12208/ 4156 |  1328/    4 |
+| SimpleTmiInterface              |  11544/ 4156 |  1328/    4 |
+| SimpleTmi1638Interface          |  11220/ 4156 |  1004/    4 |
 +--------------------------------------------------------------+
 
 ```
