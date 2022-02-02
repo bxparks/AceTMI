@@ -114,6 +114,8 @@ depends on one of the digitalWriteFast libraries, for example:
 * [Doxygen docs](https://bxparks.github.io/AceTMI/html)
     * On Github pages.
 * Examples:
+    * https://github.com/bxparks/AceSegment/tree/develop/examples/HelloTm1637
+    * https://github.com/bxparks/AceSegment/tree/develop/examples/HelloTm1638
     * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1637Demo
     * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1637DualDemo
     * https://github.com/bxparks/AceSegment/tree/develop/examples/Tm1638Demo
