@@ -113,12 +113,14 @@ class SimpleTmi1638Interface {
     void beginTransaction() const {
       clockHigh();
       strobeLow();
+      dataHigh(); // open-drain HIGH
     }
 
     /** Generate the SPI-like stop condition. */
     void endTransaction() const {
       clockHigh();
       strobeHigh();
+      dataHigh(); // open-drain HIGH
     }
 
     /**
@@ -152,6 +154,34 @@ class SimpleTmi1638Interface {
       }
     }
 
+    /**
+     * Read the data byte on the data bus, with LSB first instead of the usual
+     * MSB first for SPI.
+     *
+     * This loop generates slightly asymmetric logic signals because clockLow()
+     * lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This
+     * does not seem to cause any problems with the LED modules that I have
+     * tested.
+     *
+     * @return the data byte
+     */
+    uint8_t read() const {
+      // Make sure mDioPin is in INPUT mode because the previous write() may
+      // have put mDioPin into open-drain OUTPUT mode.
+      dataHigh();
+
+      uint8_t data = 0x0;
+      for (uint8_t i = 0;  i < 8; ++i) {
+        // Device sets the DIO pin on the falling edge of CLK.
+        clockLow();
+        uint8_t bit = dataRead();
+        clockHigh();
+        data >>= 1;
+        data |= (bit & 0x1) ? 0x80 : 0x00;
+      }
+      return data;
+    }
+
     // Use default copy constructor and assignment operator.
     SimpleTmi1638Interface(const SimpleTmi1638Interface&) = default;
     SimpleTmi1638Interface& operator=(const SimpleTmi1638Interface&) = default;
@@ -170,6 +200,12 @@ class SimpleTmi1638Interface {
     void strobeHigh() const { digitalWrite(mStbPin, HIGH); bitDelay(); }
 
     void strobeLow() const { digitalWrite(mStbPin, LOW); bitDelay(); }
+
+    uint8_t dataRead() const {
+      uint8_t data = digitalRead(mDioPin);
+      bitDelay();
+      return data;
+    }
 
   private:
     uint8_t const mDioPin;

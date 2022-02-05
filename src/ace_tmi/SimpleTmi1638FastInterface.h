@@ -97,19 +97,21 @@ class SimpleTmi1638FastInterface {
     void end() const {
       pinModeFast(T_CLK_PIN, INPUT);
       pinModeFast(T_STB_PIN, INPUT);
-      dataHigh();
+      dataHigh(); // open-drain HIGH
     }
 
     /** Generate the SPI-like start condition. */
     void beginTransaction() const {
       clockHigh();
       strobeLow();
+      dataHigh(); // open-drain HIGH
     }
 
     /** Generate the SPI-like stop condition. */
     void endTransaction() const {
       clockHigh();
       strobeHigh();
+      dataHigh(); // open-drain HIGH
     }
 
     /**
@@ -143,6 +145,34 @@ class SimpleTmi1638FastInterface {
       }
     }
 
+    /**
+     * Read the data byte on the data bus, with LSB first instead of the usual
+     * MSB first for SPI.
+     *
+     * This loop generates slightly asymmetric logic signals because clockLow()
+     * lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This
+     * does not seem to cause any problems with the LED modules that I have
+     * tested.
+     *
+     * @return the data byte
+     */
+    uint8_t read() const {
+      // Make sure mDioPin is in INPUT mode because the previous write() may
+      // have put mDioPin into open-drain OUTPUT mode.
+      dataHigh();
+
+      uint8_t data = 0x0;
+      for (uint8_t i = 0;  i < 8; ++i) {
+        // Device sets the DIO pin on the falling edge of CLK.
+        clockLow();
+        uint8_t bit = dataRead();
+        clockHigh();
+        data >>= 1;
+        data |= (bit & 0x1) ? 0x80 : 0x00;
+      }
+      return data;
+    }
+
     // Use default copy constructor and assignment operator.
     SimpleTmi1638FastInterface(const SimpleTmi1638FastInterface&) = default;
     SimpleTmi1638FastInterface& operator=(const SimpleTmi1638FastInterface&) =
@@ -163,6 +193,15 @@ class SimpleTmi1638FastInterface {
     static void strobeHigh() { digitalWriteFast(T_STB_PIN, HIGH); bitDelay(); }
 
     static void strobeLow() { digitalWriteFast(T_STB_PIN, LOW); bitDelay(); }
+
+    static uint8_t dataRead() {
+      // Use digitalRead() because digitalReadFast() seems to be buggy for a
+      // SparkFun Pro Micro (__AVR_ATmega32U4__).
+      uint8_t data = digitalRead(T_DIO_PIN);
+      bitDelay();
+      return data;
+    }
+
 };
 
 } // ace_tmi

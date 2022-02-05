@@ -1,6 +1,8 @@
 # Changelog
 
 * Unreleased
+    * Add `Tm1638::read()` method to read the keypad data from the TM1638
+      controller.
 * 0.5 (2022-02-02)
     * **Breaking Change**: Rename TM1637 classes for consistency with TM1638
       classes.
