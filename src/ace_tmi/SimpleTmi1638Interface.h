@@ -129,10 +129,8 @@ class SimpleTmi1638Interface {
      * lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This
      * does not seem to cause any problems with the LED modules that I have
      * tested.
-     *
-     * @return 0 always, which can be ignored
      */
-    uint8_t write(uint8_t data) const {
+    void write(uint8_t data) const {
       for (uint8_t i = 0;  i < 8; ++i) {
         clockLow();
         if (data & 0x1) {
@@ -152,7 +150,6 @@ class SimpleTmi1638Interface {
 
         data >>= 1;
       }
-      return 0;
     }
 
     // Use default copy constructor and assignment operator.
