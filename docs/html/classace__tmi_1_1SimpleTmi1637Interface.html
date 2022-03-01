@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.5</span>
+   &#160;<span id="projectnumber">0.6</span>
    </div>
    <div id="projectbrief">Interfaces for communicating with the TM1637 and TM1638 LED controllers on Arduino platforms</div>
   </td>
@@ -103,6 +103,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab1922dd53941a6a00948f8849a6a6afc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#ab1922dd53941a6a00948f8849a6a6afc">write</a> (uint8_t data) const</td></tr>
 <tr class="memdesc:ab1922dd53941a6a00948f8849a6a6afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for I2C.  <a href="classace__tmi_1_1SimpleTmi1637Interface.html#ab1922dd53941a6a00948f8849a6a6afc">More...</a><br /></td></tr>
 <tr class="separator:ab1922dd53941a6a00948f8849a6a6afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab871558f55955c0c1a17dfb0f6811bc3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html#ab871558f55955c0c1a17dfb0f6811bc3">read</a> () const</td></tr>
+<tr class="memdesc:ab871558f55955c0c1a17dfb0f6811bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data byte on the data bus, with LSB first instead of the usual MSB first for SPI.  <a href="classace__tmi_1_1SimpleTmi1637Interface.html#ab871558f55955c0c1a17dfb0f6811bc3">More...</a><br /></td></tr>
+<tr class="separator:ab871558f55955c0c1a17dfb0f6811bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb57a7333d25baf0df9de28203103aac"><td class="memItemLeft" align="right" valign="top"><a id="adb57a7333d25baf0df9de28203103aac"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SimpleTmi1637Interface</b> (const <a class="el" href="classace__tmi_1_1SimpleTmi1637Interface.html">SimpleTmi1637Interface</a> &amp;)=default</td></tr>
 <tr class="separator:adb57a7333d25baf0df9de28203103aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +215,37 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>These are open-drain lines, with pull-up resistors. We must not drive them HIGH actively since that could damage the transitor at the other end of the line pulling LOW. Instead, we go into INPUT mode to let the line to HIGH through the pullup resistor, then go to OUTPUT mode only to pull down. </p>
 
 <p class="definition">Definition at line <a class="el" href="SimpleTmi1637Interface_8h_source.html#l00096">96</a> of file <a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>.</p>
+
+</div>
+</div>
+<a id="ab871558f55955c0c1a17dfb0f6811bc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab871558f55955c0c1a17dfb0f6811bc3">&#9670;&nbsp;</a></span>read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ace_tmi::SimpleTmi1637Interface::read </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read the data byte on the data bus, with LSB first instead of the usual MSB first for SPI. </p>
+<p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
+<dl class="section return"><dt>Returns</dt><dd>the data byte </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="SimpleTmi1637Interface_8h_source.html#l00176">176</a> of file <a class="el" href="SimpleTmi1637Interface_8h_source.html">SimpleTmi1637Interface.h</a>.</p>
 
 </div>
 </div>

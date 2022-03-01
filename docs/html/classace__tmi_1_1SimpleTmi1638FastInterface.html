@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AceTMI
-   &#160;<span id="projectnumber">0.5</span>
+   &#160;<span id="projectnumber">0.6</span>
    </div>
    <div id="projectbrief">Interfaces for communicating with the TM1637 and TM1638 LED controllers on Arduino platforms</div>
   </td>
@@ -101,9 +101,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#ac9df0ac85049f6c66e0db71cdf7bbf23">endTransaction</a> () const</td></tr>
 <tr class="memdesc:ac9df0ac85049f6c66e0db71cdf7bbf23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the SPI-like stop condition. <br /></td></tr>
 <tr class="separator:ac9df0ac85049f6c66e0db71cdf7bbf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ca84c7aa2827f157519130707631b3a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a8ca84c7aa2827f157519130707631b3a">write</a> (uint8_t data) const</td></tr>
-<tr class="memdesc:a8ca84c7aa2827f157519130707631b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for SPI.  <a href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a8ca84c7aa2827f157519130707631b3a">More...</a><br /></td></tr>
-<tr class="separator:a8ca84c7aa2827f157519130707631b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e416c29128a17060128c6404c16e90f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a7e416c29128a17060128c6404c16e90f">write</a> (uint8_t data) const</td></tr>
+<tr class="memdesc:a7e416c29128a17060128c6404c16e90f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the data byte on the data bus, with LSB first instead of the usual MSB first for SPI.  <a href="classace__tmi_1_1SimpleTmi1638FastInterface.html#a7e416c29128a17060128c6404c16e90f">More...</a><br /></td></tr>
+<tr class="separator:a7e416c29128a17060128c6404c16e90f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad953fdef70270daf8581da866bbf491a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html#ad953fdef70270daf8581da866bbf491a">read</a> () const</td></tr>
+<tr class="memdesc:ad953fdef70270daf8581da866bbf491a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data byte on the data bus, with LSB first instead of the usual MSB first for SPI.  <a href="classace__tmi_1_1SimpleTmi1638FastInterface.html#ad953fdef70270daf8581da866bbf491a">More...</a><br /></td></tr>
+<tr class="separator:ad953fdef70270daf8581da866bbf491a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c082360de04230c6b527c82fa8b04f4"><td class="memItemLeft" align="right" valign="top"><a id="a2c082360de04230c6b527c82fa8b04f4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SimpleTmi1638FastInterface</b> (const <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html">SimpleTmi1638FastInterface</a> &amp;)=default</td></tr>
 <tr class="separator:a2c082360de04230c6b527c82fa8b04f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,8 +168,8 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_STB_PIN, uint8_t T_D
 
 </div>
 </div>
-<a id="a8ca84c7aa2827f157519130707631b3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ca84c7aa2827f157519130707631b3a">&#9670;&nbsp;</a></span>write()</h2>
+<a id="ad953fdef70270daf8581da866bbf491a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad953fdef70270daf8581da866bbf491a">&#9670;&nbsp;</a></span>read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +180,40 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_STB_PIN, uint8_t T_D
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html">ace_tmi::SimpleTmi1638FastInterface</a>&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;::write </td>
+          <td class="memname">uint8_t <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html">ace_tmi::SimpleTmi1638FastInterface</a>&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;::read </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read the data byte on the data bus, with LSB first instead of the usual MSB first for SPI. </p>
+<p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
+<dl class="section return"><dt>Returns</dt><dd>the data byte </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="SimpleTmi1638FastInterface_8h_source.html#l00159">159</a> of file <a class="el" href="SimpleTmi1638FastInterface_8h_source.html">SimpleTmi1638FastInterface.h</a>.</p>
+
+</div>
+</div>
+<a id="a7e416c29128a17060128c6404c16e90f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e416c29128a17060128c6404c16e90f">&#9670;&nbsp;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_STB_PIN, uint8_t T_DELAY_MICROS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classace__tmi_1_1SimpleTmi1638FastInterface.html">ace_tmi::SimpleTmi1638FastInterface</a>&lt; T_DIO_PIN, T_CLK_PIN, T_STB_PIN, T_DELAY_MICROS &gt;::write </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -192,8 +228,7 @@ template&lt;uint8_t T_DIO_PIN, uint8_t T_CLK_PIN, uint8_t T_STB_PIN, uint8_t T_D
 </div><div class="memdoc">
 
 <p>Send the data byte on the data bus, with LSB first instead of the usual MSB first for SPI. </p>
-<p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested.</p>
-<dl class="section return"><dt>Returns</dt><dd>0 always, which can be ignored </dd></dl>
+<p>This loop generates slightly asymmetric logic signals because clockLow() lasts for 2*bitDelay(), but clockHigh() lasts for only 1*bitDelay(). This does not seem to cause any problems with the LED modules that I have tested. </p>
 
 <p class="definition">Definition at line <a class="el" href="SimpleTmi1638FastInterface_8h_source.html#l00126">126</a> of file <a class="el" href="SimpleTmi1638FastInterface_8h_source.html">SimpleTmi1638FastInterface.h</a>.</p>
 
