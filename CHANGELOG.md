@@ -1,10 +1,14 @@
 # Changelog
 
 * Unreleased
+* 0.6 (2022-03-01)
     * Add `Tm1638::read()` method to read the keypad data from the TM1638
       controller.
     * Add `Tm1637::read()` method to read the keypad data from the TM1637
       controller.
+    * **Potentially Breaking**: Change `SimpleTmi1638Interface::write()` and
+      `SimpleTmi1638FastInterface::write()` to return `void` instead of
+      `uint8_t` since it was hardcoded to return 0.
 * 0.5 (2022-02-02)
     * **Breaking Change**: Rename TM1637 classes for consistency with TM1638
       classes.
