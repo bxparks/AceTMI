@@ -37,8 +37,8 @@ SOFTWARE.
 #define ACE_TMI_H
 
 // Version format: xxyyzz == "xx.yy.zz"
-#define ACE_TMI_VERSION 500
-#define ACE_TMI_VERSION_STRING "0.5"
+#define ACE_TMI_VERSION 600
+#define ACE_TMI_VERSION_STRING "0.6"
 
 // Blacklist platforms using https://github.com/arduino/ArduinoCore-api due to
 // incompatibilities.
