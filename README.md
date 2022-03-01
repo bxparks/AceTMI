@@ -169,6 +169,7 @@ class XxxInterface {
     void startCondition() const;
     void stopCondition() const;
     uint8_t write(uint8_t data) const;
+    uint8_t read() const;
 };
 ```
 
@@ -183,6 +184,7 @@ class Xxx1638Interface {
     void beginTransaction() const;
     void endTransaction() const;
     uint8_t write(uint8_t data) const;
+    uint8_t read() const;
 };
 ```
 
@@ -195,6 +197,15 @@ reduction of flash memory consumption is especially large for classes that use
 the digitalWriteFast libraries which use compile-time constants for pin numbers.
 The disadvantage is that this library is harder to use because these classes
 require the downstream classes to be implemented using C++ templates.
+
+The `read()` method reads the keypad scan data from the controller chip:
+
+* TM1637 supports 2x8 buttons.
+    * A single 1 byte encodes the segment lines and the key lines.
+    * Only a single button can be pressed at the same time.
+* TM1638 supports 3x8 buttons.
+    * Four bytes are required to be obtained using `read()`.
+    * Multiple buttons can be pressed at the same time.
 
 <a name="SimpleTmi1637Interface"></a>
 ### SimpleTmi1637Interface
@@ -217,6 +228,7 @@ class SimpleTmi1637Interface {
     void startCondition() const;
     void stopCondition() const;
     uint8_t write(uint8_t data) const;
+    uint8_t read() const;
 };
 ```
 
@@ -301,6 +313,7 @@ class SimpleTmi1637FastInterface {
     void startCondition() const;
     void stopCondition() const;
     uint8_t write(uint8_t data) const;
+    uint8_t read() const;
 };
 ```
 
@@ -356,6 +369,7 @@ class SimpleTmi1638Interface {
     void beginTransaction() const;
     void endTransaction() const;
     uint8_t write(uint8_t data) const;
+    uint8_t read() const;
 };
 ```
 
@@ -442,6 +456,7 @@ class SimpleTmi1638FastInterface {
     void beginTransaction() const;
     void endTransaction() const;
     uint8_t write(uint8_t data) const;
+    uint8_t read() const;
 };
 ```
 
