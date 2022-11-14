@@ -182,9 +182,10 @@ class SimpleTmi1638Interface {
       return data;
     }
 
-    // Use default copy constructor and assignment operator.
+    // Use default copy constructor. Delete the assignment operator which cannot
+    // be used with constant member variables.
     SimpleTmi1638Interface(const SimpleTmi1638Interface&) = default;
-    SimpleTmi1638Interface& operator=(const SimpleTmi1638Interface&) = default;
+    SimpleTmi1638Interface& operator=(const SimpleTmi1638Interface&) = delete;
 
   private:
     void bitDelay() const { delayMicroseconds(mDelayMicros); }

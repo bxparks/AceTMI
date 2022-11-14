@@ -195,9 +195,11 @@ class SimpleTmi1637Interface {
       return data;
     }
 
-    // Use default copy constructor and assignment operator.
+    // Use default copy constructor. Delete the assignment operator
+    // which cannot be defined because the private member variables are
+    // const.
     SimpleTmi1637Interface(const SimpleTmi1637Interface&) = default;
-    SimpleTmi1637Interface& operator=(const SimpleTmi1637Interface&) = default;
+    SimpleTmi1637Interface& operator=(const SimpleTmi1637Interface&) = delete;
 
   private:
     /**
